@@ -1,0 +1,376 @@
+/*
+ * Energy Talents theme — loaded only by app/(energy-talents)/layout.tsx, so
+ * none of it ships on the Rebel Labz side of the codebase.
+ *
+ * Plain CSS rather than Tailwind utilities: these are the handful of compound
+ * treatments (gradient buttons, form fields, routing card) that the design
+ * repeats everywhere and that read better as named components.
+ */
+
+.theme-et {
+  --et-ink: #1e1b16;
+  --et-body: #57534e;
+  --et-line: #ede7da;
+  --et-cream: #fffbf4;
+  --et-cream-2: #faf6ed;
+  --et-orange-50: #fff4e8;
+  --et-orange-400: #fb923c;
+  --et-orange-500: #f97316;
+  --et-orange-600: #ea580c;
+  --et-amber-500: #f59e0b;
+  --et-danger: #dc2626;
+
+  --et-grad: linear-gradient(95deg, #f59e0b, #ea580c);
+  --et-grad-deep: linear-gradient(
+    105deg,
+    #f59e0b 0%,
+    #ea7317 34%,
+    #9a4207 68%,
+    #42210a 100%
+  );
+
+  color: var(--et-ink);
+  background: #ffffff;
+}
+
+.theme-et ::selection {
+  background: var(--et-orange-500);
+  color: #fff;
+}
+
+.theme-et :focus-visible {
+  outline: 2px solid var(--et-orange-500);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.theme-et a:hover {
+  color: var(--et-orange-600);
+}
+
+.theme-et a.et-btn-grad:hover,
+.theme-et a[class*="text-white"]:hover {
+  color: #fff;
+}
+
+/* ── Surfaces ─────────────────────────────────────────────────────────── */
+
+.et-dots {
+  background-image: radial-gradient(#e5dcc9 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+.et-grad-deep {
+  background-image:
+    radial-gradient(rgb(255 255 255 / 0.13) 1px, transparent 1px),
+    var(--et-grad-deep);
+  background-size:
+    22px 22px,
+    100% 100%;
+}
+
+.et-grad {
+  background-image: var(--et-grad);
+}
+
+.et-card {
+  background: #fff;
+  border: 1px solid var(--et-line);
+  border-radius: 18px;
+}
+
+.et-softshadow {
+  box-shadow: 0 14px 40px -18px rgb(30 27 22 / 0.16);
+}
+
+.et-chip-glow {
+  box-shadow: 0 6px 18px -4px rgb(249 115 22 / 0.45);
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────────── */
+
+.et-btn-grad {
+  background-image: linear-gradient(95deg, #f59e0b, #ea580c, #c2410c);
+  background-size: 200% 100%;
+  background-position: 0% 0;
+  box-shadow: 0 8px 24px -8px rgb(234 88 12 / 0.5);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background-position 0.45s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.et-btn-grad:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 14px 30px -8px rgb(234 88 12 / 0.55),
+    0 0 0 3px rgb(249 115 22 / 0.18);
+  background-position: 60% 0;
+}
+
+/* Sheen that sweeps across the button on hover. */
+.et-btn-grad::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80%;
+  height: 100%;
+  width: 50%;
+  background: linear-gradient(
+    105deg,
+    transparent,
+    rgb(255 255 255 / 0.35),
+    transparent
+  );
+  transform: skewX(-18deg);
+}
+
+.et-btn-grad:hover::after {
+  animation: et-shine 0.7s ease both;
+}
+
+@keyframes et-shine {
+  from {
+    left: -80%;
+  }
+  to {
+    left: 130%;
+  }
+}
+
+.et-btn-grad:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 5px 14px -6px rgb(234 88 12 / 0.5);
+}
+
+.et-btn-lift {
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.et-btn-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px -14px rgb(30 27 22 / 0.3);
+}
+
+.et-btn-lift:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Arrow nudge shared by every link that ends in one. */
+.theme-et a span[aria-hidden] {
+  display: inline-block;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.theme-et a:hover span[aria-hidden] {
+  transform: translateX(5px);
+}
+
+/* ── Form ─────────────────────────────────────────────────────────────── */
+
+.et-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 7px;
+}
+
+.et-field {
+  width: 100%;
+  border: 1px solid var(--et-line);
+  border-radius: 12px;
+  background: #fff;
+  padding: 13px 15px;
+  font-size: 14.5px;
+  color: var(--et-ink);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.et-field::placeholder {
+  color: #a8a29e;
+}
+
+.et-field:focus {
+  outline: none;
+  border-color: var(--et-orange-500);
+  box-shadow: 0 0 0 3px rgb(249 115 22 / 0.14);
+}
+
+.et-field[aria-invalid="true"] {
+  border-color: var(--et-danger);
+  box-shadow: 0 0 0 3px rgb(220 38 38 / 0.12);
+}
+
+textarea.et-field {
+  resize: vertical;
+  min-height: 118px;
+}
+
+select.et-field {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2357534E' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+}
+
+/* Leading icon inside a field. */
+.et-iwrap {
+  position: relative;
+}
+
+.et-iwrap svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  stroke: #a8a29e;
+  transition: stroke 0.2s ease;
+}
+
+.et-iwrap .et-field {
+  padding-left: 41px;
+}
+
+.et-iwrap:focus-within svg {
+  stroke: var(--et-orange-600);
+}
+
+.et-error {
+  color: var(--et-danger);
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.et-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid var(--et-line);
+  background: #fefcf8;
+  border-radius: 14px;
+  padding: 15px 16px;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.et-consent:hover {
+  border-color: var(--et-orange-400);
+  background: #fff;
+}
+
+.et-consent[data-invalid="true"] {
+  border-color: var(--et-danger);
+  background: #fef4f4;
+}
+
+/* ── Live routing card ────────────────────────────────────────────────── */
+
+.et-route-card {
+  background: #fff;
+  border: 1px solid var(--et-line);
+  border-radius: 18px;
+  padding: 22px;
+  transition:
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.et-route-card[data-live="true"] {
+  border-color: #fbbf77;
+  box-shadow: 0 18px 40px -24px rgb(234 88 12 / 0.4);
+}
+
+.et-avatar {
+  height: 42px;
+  width: 42px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 13px;
+  color: #fff;
+  background-image: var(--et-grad);
+  flex-shrink: 0;
+  box-shadow: 0 6px 16px -6px rgb(234 88 12 / 0.5);
+}
+
+/* Green "open" indicator. */
+.et-dot {
+  height: 8px;
+  width: 8px;
+  border-radius: 99px;
+  background: #10b981;
+  box-shadow: 0 0 0 4px rgb(16 185 129 / 0.16);
+}
+
+/* ── FAQ ──────────────────────────────────────────────────────────────── */
+
+.et-faq {
+  border-bottom: 1px solid var(--et-line);
+}
+
+.et-faq summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 0;
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  transition: color 0.2s ease;
+}
+
+.et-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.et-faq summary:hover {
+  color: var(--et-orange-600);
+}
+
+.et-faq .et-faq-icon {
+  flex-shrink: 0;
+  height: 28px;
+  width: 28px;
+  border-radius: 99px;
+  border: 1px solid var(--et-line);
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+  line-height: 1;
+  color: var(--et-orange-600);
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+.et-faq[open] .et-faq-icon {
+  transform: rotate(45deg);
+  background-image: var(--et-grad);
+  color: #fff;
+  border-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .et-btn-grad::after {
+    display: none;
+  }
+}
