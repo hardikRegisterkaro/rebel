@@ -83,7 +83,7 @@ export function Frameworks() {
       ref={stageRef}
       id="frameworks"
       aria-labelledby="frameworks-heading"
-      className="relative border-t border-black/5 bg-paper text-light-fg"
+      className="relative border-t border-white/10 bg-ink text-dark-fg"
     >
       <div
         ref={stickyRef}
@@ -101,21 +101,21 @@ export function Frameworks() {
               Strategic frameworks &amp; Solutions for businesses
               <span className="text-brand">.</span>
             </h2>
-            <p className="text-[1.02rem] leading-relaxed text-light-muted">
+            <p className="text-[1.02rem] leading-relaxed text-dark-fg-3">
               Where the philosophy meets real enterprises — four intelligence
               pillars that prove what the Lab believes.
             </p>
           </div>
 
           <div className="mb-[clamp(12px,2vh,20px)] flex items-center gap-4">
-            <span className="hidden font-mono text-[0.58rem] tracking-[0.16em] whitespace-nowrap text-light-faint uppercase lg:inline">
+            <span className="hidden font-mono text-[0.58rem] tracking-[0.16em] whitespace-nowrap text-dark-faint uppercase lg:inline">
               Keep scrolling
             </span>
-            <span className="font-mono text-[0.58rem] tracking-[0.16em] whitespace-nowrap text-light-faint uppercase lg:hidden">
+            <span className="font-mono text-[0.58rem] tracking-[0.16em] whitespace-nowrap text-dark-faint uppercase lg:hidden">
               Swipe
             </span>
             <div
-              className="relative h-0.5 flex-1 overflow-hidden bg-black/10"
+              className="relative h-0.5 flex-1 overflow-hidden bg-white/12"
               role="progressbar"
               aria-valuemin={1}
               aria-valuemax={PILLARS.length}
@@ -127,7 +127,7 @@ export function Frameworks() {
                 style={{ transform: `translateX(${(progress * 300).toFixed(1)}%)` }}
               />
             </div>
-            <span className="font-mono text-[0.58rem] tracking-[0.16em] whitespace-nowrap text-light-faint">
+            <span className="font-mono text-[0.58rem] tracking-[0.16em] whitespace-nowrap text-dark-faint">
               {String(activeIndex).padStart(2, "0")} / 0{PILLARS.length}
             </span>
           </div>
@@ -169,12 +169,12 @@ export function Frameworks() {
                     </p>
                     <span
                       aria-hidden="true"
-                      className="mb-2.5 block h-0.5 w-[26px] bg-black/15 transition-[width,background-color] duration-500 ease-(--ease-out-soft) group-hover:w-16 group-hover:bg-brand"
+                      className="mb-2.5 block h-0.5 w-[26px] bg-white/20 transition-[width,background-color] duration-500 ease-(--ease-out-soft) group-hover:w-16 group-hover:bg-brand"
                     />
                     <h3 className="mb-2.5 text-[clamp(1.12rem,1.7vw,1.32rem)] leading-tight font-semibold tracking-[-0.015em] transition-colors duration-400 group-hover:text-brand">
                       {pillar.title}
                     </h3>
-                    <p className="text-[0.88rem] leading-relaxed text-[#5a5a5a]">
+                    <p className="text-[0.88rem] leading-relaxed text-[#a8a8a8]">
                       {pillar.body}
                     </p>
                     {pillar.href && (
@@ -211,8 +211,8 @@ function PillarCard({
   pillar: Pillar;
   children: React.ReactNode;
 }) {
-  const shell = `group relative flex h-full flex-col overflow-hidden rounded-[18px] border bg-paper shadow-[0_1px_2px_rgb(16_16_20/0.05),0_6px_16px_-10px_rgb(16_16_20/0.12)] ${
-    pillar.featured ? "border-brand/30" : "border-black/[0.08]"
+  const shell = `group relative flex h-full flex-col overflow-hidden rounded-[18px] border bg-ink-800 text-dark-fg ${
+    pillar.featured ? "border-brand/35" : "border-white/[0.10]"
   }`;
 
   if (!pillar.href) return <div className={shell}>{children}</div>;
@@ -221,7 +221,7 @@ function PillarCard({
     <Link
       href={pillar.href}
       prefetch={false}
-      className={`${shell} transition-[transform,box-shadow,border-color] duration-500 ease-(--ease-out-soft) hover:-translate-y-2 hover:border-brand/50 hover:shadow-[0_18px_32px_-18px_rgb(16_16_20/0.28),0_10px_22px_-16px_rgb(255_51_51/0.3)]`}
+      className={`${shell} transition-[transform,box-shadow,border-color] duration-500 ease-(--ease-out-soft) hover:-translate-y-2 hover:border-brand/60 hover:shadow-[0_18px_32px_-18px_rgb(0_0_0/0.75),0_10px_22px_-16px_rgb(255_51_51/0.45)]`}
     >
       {children}
     </Link>

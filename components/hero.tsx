@@ -14,7 +14,7 @@ export function Hero() {
     >
       <div className="min-w-0">
         <p
-          data-reveal
+          data-reveal="fade-up"
           className="mb-8 flex flex-wrap items-center gap-x-3.5 gap-y-2.5 text-[0.72rem] tracking-[0.24em] text-dark-muted uppercase"
         >
           <span className="inline-flex items-center gap-2.5 rounded-full border border-white/15 px-3.5 py-[7px]">
@@ -25,7 +25,8 @@ export function Hero() {
 
         <h1
           id="hero-heading"
-          data-reveal
+          data-reveal="fade-up"
+          data-reveal-delay="1"
           className="text-[clamp(2.7rem,5.6vw,5.4rem)] leading-none font-bold tracking-[-0.03em] text-balance"
         >
           Architecting&nbsp;the{" "}
@@ -34,21 +35,24 @@ export function Hero() {
         </h1>
 
         <p
-          data-reveal
+          data-reveal="fade-up"
+          data-reveal-delay="2"
           className="mt-8 max-w-[46ch] text-[1.125rem] leading-relaxed text-pretty text-dark-fg-3"
         >
           <span className="hl-sweep">{HERO.lede}</span>
         </p>
 
         <p
-          data-reveal
+          data-reveal="fade-up"
+          data-reveal-delay="3"
           className="mt-3 max-w-[46ch] text-[1.125rem] leading-relaxed text-pretty text-dark-muted-2 italic"
         >
           {HERO.sub}
         </p>
 
         <div
-          data-reveal
+          data-reveal="fade-up"
+          data-reveal-delay="4"
           className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3.5 text-[0.78rem] text-dark-muted"
         >
           <Link

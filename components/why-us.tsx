@@ -8,11 +8,11 @@ export function WhyUs() {
       className="border-t border-black/[0.08] bg-paper text-light-fg"
     >
       <div className="mx-auto max-w-(--spacing-shell) px-6 py-[clamp(80px,12vh,140px)] sm:px-7">
-        <div
-          data-reveal
-          className="mb-[clamp(40px,6vh,64px)] flex flex-wrap items-end justify-between gap-6"
-        >
-          <div>
+        {/* Heading and aside enter from opposite edges — the split header is
+            the one place on this page where that reads as composed rather than
+            busy. */}
+        <div className="mb-[clamp(40px,6vh,64px)] flex flex-wrap items-end justify-between gap-6">
+          <div data-reveal="fade-right">
             <p className="mb-4.5 inline-flex items-center gap-2.5 font-mono text-[0.7rem] tracking-[0.22em] text-brand uppercase">
               <span aria-hidden="true" className="inline-block size-[7px] bg-brand" />
               Why Choose Us
@@ -24,14 +24,21 @@ export function WhyUs() {
               Built different, <em className="italic">by design</em>.
             </h2>
           </div>
-          <p className="max-w-[38ch] text-[0.95rem] leading-relaxed text-light-muted">
+          <p
+            data-reveal="fade-left"
+            data-reveal-delay="1"
+            className="max-w-[38ch] text-[0.95rem] leading-relaxed text-light-muted"
+          >
             Not a vendor, a lab. Every engagement is measured against the same
             constitution our systems are.
           </p>
         </div>
 
+        {/* Revealed as one unit, not per cell: the cells are the surface over a
+            dark backing showing through 1px gaps, so fading them individually
+            would flash that backing mid-animation. */}
         <ul
-          data-reveal
+          data-reveal="zoom-in"
           className="grid gap-px overflow-hidden rounded-[22px] border border-black/[0.14] bg-black/[0.14] sm:grid-cols-2 xl:grid-cols-4"
         >
           {DIFFERENTIATORS.map((item) => (

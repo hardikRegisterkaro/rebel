@@ -46,8 +46,13 @@ export function Philosophy() {
           </div>
 
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {PLATFORMS.map((platform) => (
-              <li key={platform.code} className="min-w-0">
+            {PLATFORMS.map((platform, index) => (
+              <li
+                key={platform.code}
+                data-reveal="zoom-in-up"
+                data-reveal-delay={index + 1}
+                className="min-w-0"
+              >
                 {/* Static card — the per-platform pages don't exist yet, so
                     there is nothing to link to and no hover affordance. */}
                 <div className="flex h-full min-h-[300px] flex-col overflow-hidden rounded-[22px] border border-black/10 bg-paper">
