@@ -6,7 +6,7 @@ export function PipelineSection() {
     <section
       id="pipeline"
       aria-labelledby="pipeline-heading"
-      className="scroll-mt-24 bg-paper text-light-fg"
+      className="scroll-mt-24 border-t border-white/10 bg-ink text-dark-fg"
     >
       <div className="mx-auto grid grid-cols-1 max-w-(--spacing-shell) items-start gap-[clamp(32px,5vw,64px)] px-6 py-[clamp(64px,10vh,110px)] sm:px-7 lg:grid-cols-[0.85fr_1.15fr]">
         <div data-reveal="fade-right">
@@ -32,7 +32,7 @@ export function PipelineSection() {
                   aria-hidden="true"
                   className="mt-1.75 inline-block size-1.5 flex-none bg-brand"
                 />
-                <span className="text-[0.9rem] leading-[1.55] text-[#333333]">
+                <span className="text-[0.9rem] leading-[1.55] text-[#b0b0b0]">
                   {bullet}
                 </span>
               </li>

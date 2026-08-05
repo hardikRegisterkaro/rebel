@@ -7,7 +7,7 @@ export function Principles() {
     <section
       id="principles"
       aria-labelledby="principles-heading"
-      className="mx-auto max-w-(--spacing-shell) border-t border-white/[0.12] px-6 py-[clamp(72px,11vh,130px)] sm:px-7"
+      className="mx-auto max-w-(--spacing-shell) scroll-mt-24 border-t border-white/[0.12] px-6 py-[clamp(72px,11vh,130px)] sm:px-7"
     >
       <div
         data-reveal

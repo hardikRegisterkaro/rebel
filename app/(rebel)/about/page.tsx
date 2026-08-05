@@ -45,7 +45,8 @@ export default function AboutPage() {
       <DesignPartners />
       <AboutFaq />
       <DualCta />
-      <OpenLab />
+      {/* Dark here: DualCta above it is light, and this closes the page. */}
+      <OpenLab tone="dark" />
     </>
   );
 }

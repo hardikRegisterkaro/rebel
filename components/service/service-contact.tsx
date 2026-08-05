@@ -7,11 +7,11 @@ export function ServiceContact({ solution }: { solution: Solution }) {
     <section
       id="openlab"
       aria-labelledby="contact-heading"
-      className="scroll-mt-24 border-t border-black/[0.08] bg-paper text-light-fg"
+      className="scroll-mt-24 border-t border-white/10 bg-ink text-dark-fg"
     >
       <div className="mx-auto grid grid-cols-1 max-w-(--spacing-shell) items-start gap-[clamp(36px,5vw,80px)] px-6 pt-[clamp(72px,11vh,124px)] pb-[clamp(64px,9vh,100px)] sm:px-7 lg:grid-cols-[1.05fr_0.95fr]">
         <div data-reveal="fade-right">
-          <p className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-black/[0.14] px-4 py-2 text-[0.74rem] tracking-[0.12em] text-light-muted-2">
+          <p className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-white/[0.16] px-4 py-2 text-[0.74rem] tracking-[0.12em] text-dark-fg-2">
             <span
               aria-hidden="true"
               className="inline-block size-[7px] animate-(--animate-soft-pulse) rounded-full bg-brand"
@@ -27,13 +27,13 @@ export function ServiceContact({ solution }: { solution: Solution }) {
             shouldn&apos;t require a login.
           </h2>
 
-          <p className="mt-7 max-w-[46ch] text-[clamp(1rem,1.5vw,1.22rem)] leading-relaxed text-light-fg-2">
+          <p className="mt-7 max-w-[46ch] text-[clamp(1rem,1.5vw,1.22rem)] leading-relaxed text-dark-fg-3">
             Bring us the decision you&apos;re stuck on. We scope fast, ship a
             working pilot in weeks, and measure success against your outcome —
             not our hours.
           </p>
 
-          <div className="mt-9 flex flex-wrap items-center gap-x-6.5 gap-y-3 font-mono text-[0.68rem] text-light-muted-2">
+          <div className="mt-9 flex flex-wrap items-center gap-x-6.5 gap-y-3 font-mono text-[0.68rem] text-dark-muted">
             <span className="inline-flex items-center gap-2">
               <span
                 aria-hidden="true"

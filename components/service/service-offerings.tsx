@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { SmartLink } from "@/components/smart-link";
 
 import { Emphasis } from "@/components/emphasis";
 import type { Offering } from "@/lib/solutions";
@@ -45,7 +45,7 @@ export function ServiceOfferings({ offerings }: { offerings: Offering[] }) {
         >
           {offerings.map((offering, index) => (
             <li key={offering.title} className="min-w-0">
-              <Link
+              <SmartLink
                 href="#openlab"
                 className="group flex h-full flex-col overflow-hidden rounded-[22px] border border-white/10 bg-[#0b0b0c] text-white transition-[transform,border-color,box-shadow] duration-500 ease-(--ease-out-soft) hover:-translate-y-1.5 hover:border-brand/45 hover:shadow-[0_24px_50px_-30px_rgb(0_0_0/0.9)]"
               >
@@ -106,7 +106,7 @@ export function ServiceOfferings({ offerings }: { offerings: Offering[] }) {
                     </span>
                   </div>
                 </div>
-              </Link>
+              </SmartLink>
             </li>
           ))}
         </ul>

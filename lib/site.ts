@@ -1,3 +1,5 @@
+import { ROLES } from "@/lib/careers";
+
 /**
  * Canonical origin, shared by `metadataBase`, robots, and the sitemap so the
  * three can never disagree. Override per environment with NEXT_PUBLIC_SITE_URL
@@ -14,10 +16,13 @@ export const SITE_URL =
  * `changeFrequency` and `priority` are hints only — search engines mostly
  * ignore them, but they cost nothing to state accurately.
  */
-export const SITEMAP_ROUTES = [
+export const SITEMAP_ROUTES: { path: string; priority: number }[] = [
   { path: "/", priority: 1 },
   { path: "/solutions/decision-intelligence", priority: 0.9 },
   { path: "/about", priority: 0.8 },
   { path: "/careers", priority: 0.8 },
   { path: "/contact", priority: 0.7 },
-] as const;
+  // Role pages are derived so a new opening is listed the moment it is added
+  // to ROLES — there is no second place to remember to update.
+  ...ROLES.map((role) => ({ path: `/careers/${role.slug}`, priority: 0.6 })),
+];

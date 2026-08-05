@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { SmartLink } from "@/components/smart-link";
 
 import type { Solution } from "@/lib/solutions";
 
@@ -76,13 +77,13 @@ export function ServiceHero({ solution }: { solution: Solution }) {
             data-reveal-delay="4"
             className="mt-10 flex flex-wrap items-center gap-3.5"
           >
-            <Link
+            <SmartLink
               href="#offerings"
               className="inline-flex items-center gap-2.5 rounded-full bg-white px-7 py-4 text-[0.92rem] font-semibold text-ink transition-[transform,background-color] duration-300 ease-(--ease-out-soft) hover:-translate-y-0.5 hover:bg-[#e7e7e4]"
             >
               Explore Offerings
-            </Link>
-            <Link
+            </SmartLink>
+            <SmartLink
               href="#openlab"
               className="group inline-flex items-center gap-2.5 rounded-full border border-white/30 px-6.5 py-4 text-[0.92rem] font-medium text-white transition-[border-color,background-color] duration-300 hover:border-brand hover:bg-brand/[0.08]"
             >
@@ -93,7 +94,7 @@ export function ServiceHero({ solution }: { solution: Solution }) {
               >
                 →
               </span>
-            </Link>
+            </SmartLink>
           </div>
 
           <dl

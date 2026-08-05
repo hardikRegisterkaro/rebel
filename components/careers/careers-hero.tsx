@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SmartLink } from "@/components/smart-link";
 
 import { CAREERS, ROLES } from "@/lib/careers";
 
@@ -71,7 +72,7 @@ export function CareersHero() {
           </p>
 
           <div data-reveal="fade-up" data-reveal-delay="4" className="mt-9">
-            <Link
+            <SmartLink
               href={CAREERS.hero.cta.href}
               className="group inline-flex items-center gap-2.5 rounded-full bg-brand px-6.5 py-3.5 text-[0.9rem] font-semibold text-white transition-[transform,box-shadow] duration-300 ease-(--ease-out-soft) hover:-translate-y-0.5 hover:shadow-[0_16px_34px_-14px_rgb(255_51_51/0.75)]"
             >
@@ -82,7 +83,7 @@ export function CareersHero() {
               >
                 →
               </span>
-            </Link>
+            </SmartLink>
           </div>
         </div>
       </div>

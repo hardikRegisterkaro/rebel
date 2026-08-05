@@ -38,7 +38,7 @@ export function FoundingTeam() {
   return (
     <section
       aria-labelledby="team-heading"
-      className="border-t border-white/10 bg-ink text-dark-fg"
+      className="border-t border-black/[0.08] bg-paper text-light-fg"
     >
       <div className="mx-auto max-w-(--spacing-shell) px-6 py-[clamp(64px,10vh,110px)] sm:px-7">
         <div data-reveal="fade-right" className="mb-[clamp(36px,5vh,56px)]">
@@ -75,7 +75,7 @@ export function FoundingTeam() {
                   {member.role}
                 </p>
               </div>
-              <p className="mt-2.5 text-[0.84rem] leading-[1.5] text-[#a8a8a8]">
+              <p className="mt-2.5 text-[0.84rem] leading-[1.5] text-light-muted">
                 {member.bio}
               </p>
             </li>

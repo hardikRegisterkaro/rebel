@@ -16,18 +16,36 @@ export function ContactRail() {
         data-reveal-delay="1"
         className="grid grid-cols-1 gap-4 sm:grid-cols-2"
       >
-        <Link
-          href={`mailto:${SITE.email}`}
-          className={`flex flex-col gap-2 ${RAIL_CARD}`}
-        >
+        {/* Every direct line in one card — email, phone, profile — so a
+            visitor never has to hunt the footer for them. */}
+        <div className={`flex flex-col gap-2 ${RAIL_CARD}`}>
           <span className="font-mono text-[0.58rem] tracking-[0.16em] text-brand uppercase">
             Fastest
           </span>
-          <span className="text-[0.98rem] font-semibold">Email the lab</span>
-          <span className="font-mono text-[0.74rem] break-words text-light-muted">
-            {SITE.email}
-          </span>
-        </Link>
+          <span className="text-[0.98rem] font-semibold">Reach the lab</span>
+          <address className="flex flex-col items-start gap-1.5 not-italic">
+            <a
+              href={`mailto:${SITE.email}`}
+              className="font-mono text-[0.74rem] break-words text-light-muted transition-colors hover:text-brand"
+            >
+              {SITE.email}
+            </a>
+            <a
+              href={SITE.phoneHref}
+              className="font-mono text-[0.74rem] text-light-muted transition-colors hover:text-brand"
+            >
+              {SITE.phone}
+            </a>
+            <a
+              href={SITE.linkedinHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-[0.74rem] break-words text-light-muted transition-colors hover:text-brand"
+            >
+              {SITE.linkedin}
+            </a>
+          </address>
+        </div>
 
         <Link href="/careers" className={`flex flex-col gap-2 ${RAIL_CARD}`}>
           <span className="font-mono text-[0.58rem] tracking-[0.16em] text-brand uppercase">

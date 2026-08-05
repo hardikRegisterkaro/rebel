@@ -2,8 +2,11 @@ import { CAREERS, PERKS } from "@/lib/careers";
 
 export function WhyBuildHere() {
   return (
-    <section aria-labelledby="perks-heading" className="bg-paper text-light-fg">
-      <div className="mx-auto max-w-(--spacing-shell) px-6 pb-[clamp(64px,10vh,110px)] sm:px-7">
+    <section
+      aria-labelledby="perks-heading"
+      className="border-t border-white/10 bg-ink text-dark-fg"
+    >
+      <div className="mx-auto max-w-(--spacing-shell) px-6 py-[clamp(64px,10vh,110px)] sm:px-7">
         <div
           data-reveal="fade-right"
           className="mb-[clamp(36px,5vh,56px)] flex flex-wrap items-end justify-between gap-5"
@@ -24,7 +27,7 @@ export function WhyBuildHere() {
               <span className="text-brand">.</span>
             </h2>
           </div>
-          <p className="m-0 max-w-[36ch] text-[0.94rem] leading-relaxed text-light-muted">
+          <p className="m-0 max-w-[36ch] text-[0.94rem] leading-relaxed text-[#a8a8a8]">
             {CAREERS.perks.aside}
           </p>
         </div>
@@ -37,7 +40,7 @@ export function WhyBuildHere() {
           {PERKS.map((perk) => (
             <li
               key={perk.title}
-              className="flex flex-col gap-3 rounded-[18px] border border-black/[0.12] bg-paper px-6 py-6.5 transition-[transform,border-color] duration-350 ease-(--ease-out-soft) hover:-translate-y-1 hover:border-black/[0.22]"
+              className="flex flex-col gap-3 rounded-[18px] border border-white/[0.10] bg-ink-800 px-6 py-6.5 transition-[transform,border-color] duration-350 ease-(--ease-out-soft) hover:-translate-y-1 hover:border-white/[0.22]"
             >
               <span
                 aria-hidden="true"
@@ -46,7 +49,7 @@ export function WhyBuildHere() {
               <h3 className="mt-1 text-[1.05rem] font-semibold tracking-[-0.01em]">
                 {perk.title}
               </h3>
-              <p className="text-[0.86rem] leading-[1.55] text-[#666666]">
+              <p className="text-[0.86rem] leading-[1.55] text-[#a8a8a8]">
                 {perk.desc}
               </p>
             </li>

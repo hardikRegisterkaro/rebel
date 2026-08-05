@@ -19,6 +19,29 @@ export function SiteFooter() {
           <p className="max-w-[30ch] text-[0.85rem] leading-relaxed text-[#7a7a7a]">
             {SITE.tagline}
           </p>
+
+          <address className="mt-1 flex flex-col items-start gap-2 not-italic">
+            <a
+              href={`mailto:${SITE.email}`}
+              className="text-[0.85rem] text-[#b0b0b0] transition-colors hover:text-brand"
+            >
+              {SITE.email}
+            </a>
+            <a
+              href={SITE.phoneHref}
+              className="font-mono text-[0.85rem] text-[#b0b0b0] transition-colors hover:text-brand"
+            >
+              {SITE.phone}
+            </a>
+            <a
+              href={SITE.linkedinHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[0.85rem] text-[#b0b0b0] transition-colors hover:text-brand"
+            >
+              {SITE.linkedin}
+            </a>
+          </address>
         </div>
 
         {FOOTER_GROUPS.map((group) => (

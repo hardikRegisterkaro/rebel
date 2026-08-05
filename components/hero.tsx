@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SmartLink } from "@/components/smart-link";
 
 import { MazeCanvas } from "@/components/maze-canvas";
 import { HERO } from "@/lib/content";
@@ -58,7 +58,7 @@ export function Hero() {
           data-reveal-delay="4"
           className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3.5 text-[0.78rem] text-dark-muted"
         >
-          <Link
+          <SmartLink
             href={HERO.cta.href}
             className="group inline-flex items-center gap-2.5 rounded-full border border-brand bg-brand px-[22px] py-3.5 tracking-[0.02em] text-white shadow-[0_8px_24px_-10px_rgb(255_51_51/0.5)] transition-[transform,background-color,box-shadow] duration-300 ease-(--ease-out-soft) hover:-translate-y-0.5 hover:scale-[1.035] hover:bg-brand-hover hover:shadow-[0_16px_38px_-8px_rgb(255_51_51/0.65)]"
           >
@@ -69,7 +69,7 @@ export function Hero() {
             >
               →
             </span>
-          </Link>
+          </SmartLink>
 
           <span className="inline-flex items-center gap-2">
             <span

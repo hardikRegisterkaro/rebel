@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SmartLink } from "@/components/smart-link";
 
 import { OrbitCanvas } from "@/components/about/orbit-canvas";
 import { ABOUT } from "@/lib/about";
@@ -76,7 +77,7 @@ export function AboutHero() {
             data-reveal-delay="4"
             className="mt-9 flex flex-wrap items-center gap-3.5"
           >
-            <Link
+            <SmartLink
               href={ABOUT.hero.primaryCta.href}
               className="group inline-flex items-center gap-2.5 rounded-full bg-white px-6.5 py-3.5 text-[0.9rem] font-semibold text-ink transition-[transform,background-color] duration-300 ease-(--ease-out-soft) hover:-translate-y-0.5 hover:bg-[#e4e4e4]"
             >
@@ -87,13 +88,13 @@ export function AboutHero() {
               >
                 →
               </span>
-            </Link>
-            <Link
+            </SmartLink>
+            <SmartLink
               href={ABOUT.hero.secondaryCta.href}
               className="inline-flex items-center gap-2.5 rounded-full border border-white/[0.28] px-6 py-3.5 text-[0.9rem] font-medium text-white transition-[border-color,background-color] duration-300 hover:border-brand hover:bg-brand/[0.08]"
             >
               {ABOUT.hero.secondaryCta.label}
-            </Link>
+            </SmartLink>
           </div>
         </div>
 

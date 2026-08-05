@@ -124,7 +124,7 @@ export function RoleBoard() {
               </p>
 
               <Link
-                href="#pipeline"
+                href={`/careers/${role.slug}`}
                 className="justify-self-start rounded-full border border-black/[0.14] bg-paper px-4.5 py-2.25 text-[0.82rem] font-semibold whitespace-nowrap text-light-fg transition-colors duration-250 group-hover:bg-light-fg group-hover:text-white sm:justify-self-auto"
               >
                 Apply <span aria-hidden="true">→</span>

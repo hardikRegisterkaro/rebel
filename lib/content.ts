@@ -4,9 +4,19 @@
  * `<Emphasis>` — see components/emphasis.tsx.
  */
 
+/**
+ * Client contact details. Single source of truth — every mailto, tel, and
+ * profile link on the site reads from here, so changing a detail is one edit.
+ * `*Href` variants carry the machine-readable form (no spaces or dashes in the
+ * tel: URI, absolute https for the profile).
+ */
 export const SITE = {
   name: "Rebel Labz",
   email: "amigo@rebel-labz.com",
+  phone: "+91-8828267791",
+  phoneHref: "tel:+918828267791",
+  linkedin: "linkedin.com/in/amigo-sharma",
+  linkedinHref: "https://www.linkedin.com/in/amigo-sharma",
   tagline:
     "An intelligence lab — researching, engineering, and democratizing intelligence.",
 } as const;
@@ -60,7 +70,10 @@ export const PRIMARY_NAV: NavItem[] = [
   { label: "Careers", href: "/careers" },
 ];
 
-export const HEADER_CTA = { label: "Collaborate with us", href: "/contact" } as const;
+export const HEADER_CTA = {
+  label: "Collaborate with us",
+  href: "/contact",
+} as const;
 
 /* ── Hero ────────────────────────────────────────────────────────────────── */
 
