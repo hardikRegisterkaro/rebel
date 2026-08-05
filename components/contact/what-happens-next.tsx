@@ -8,7 +8,7 @@ export function WhatHappensNext() {
     >
       <div className="mx-auto max-w-(--spacing-shell) px-6 py-[clamp(64px,10vh,110px)] sm:px-7">
         <div
-          data-reveal
+          data-reveal="fade-right"
           className="mb-[clamp(34px,5vh,52px)] flex flex-wrap items-end justify-between gap-5"
         >
           <div>
@@ -32,12 +32,16 @@ export function WhatHappensNext() {
           </p>
         </div>
 
-        {/* 1px gap over a light background paints the dividers between cells. */}
-        <ol className="grid grid-cols-1 gap-px overflow-hidden rounded-[20px] border border-white/[0.14] bg-white/[0.14] sm:grid-cols-2 lg:grid-cols-4">
+        {/* 1px gap over a light background paints the dividers between cells —
+            so this reveals as one unit. Fading each cell separately would flash
+            that backing through wherever a cell was still transparent. */}
+        <ol
+          data-reveal="zoom-in"
+          className="grid grid-cols-1 gap-px overflow-hidden rounded-[20px] border border-white/[0.14] bg-white/[0.14] sm:grid-cols-2 lg:grid-cols-4"
+        >
           {STEPS.map((step) => (
             <li
               key={step.ident}
-              data-reveal
               className="flex min-h-[190px] flex-col gap-3 bg-ink-800 px-6 py-7"
             >
               <span className="font-mono text-[0.6rem] tracking-[0.16em] text-brand uppercase">

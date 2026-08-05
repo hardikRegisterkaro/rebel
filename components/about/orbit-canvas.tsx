@@ -45,8 +45,12 @@ export function OrbitCanvas() {
     let pointerX = -1;
     let pointerY = -1;
     const pulses: number[] = [];
-    const packets: { orbit: number; outbound: boolean; start: number; dur: number }[] =
-      [];
+    const packets: {
+      orbit: number;
+      outbound: boolean;
+      start: number;
+      dur: number;
+    }[] = [];
     let lastPacket = 0;
 
     // Ambient dust, in normalized coordinates so a resize never re-seeds it.
@@ -95,7 +99,8 @@ export function OrbitCanvas() {
       context.clearRect(0, 0, width, height);
 
       for (const speck of dust) {
-        const twinkle = 0.06 + 0.1 * (0.5 + 0.5 * Math.sin(seconds * 0.8 + speck.phase));
+        const twinkle =
+          0.06 + 0.1 * (0.5 + 0.5 * Math.sin(seconds * 0.8 + speck.phase));
         context.fillStyle = `rgb(255 255 255 / ${twinkle.toFixed(3)})`;
         context.beginPath();
         context.arc(speck.x * width, speck.y * height, speck.r, 0, Math.PI * 2);
@@ -108,12 +113,26 @@ export function OrbitCanvas() {
         context.lineWidth = 1;
         context.strokeStyle = "rgb(255 255 255 / 0.07)";
         context.beginPath();
-        context.ellipse(cx, cy, orbit.r * size, orbit.r * size * 0.94, 0, 0, Math.PI * 2);
+        context.ellipse(
+          cx,
+          cy,
+          orbit.r * size,
+          orbit.r * size * 0.94,
+          0,
+          0,
+          Math.PI * 2,
+        );
         context.stroke();
         context.strokeStyle = "rgb(255 255 255 / 0.18)";
         context.beginPath();
         context.ellipse(
-          cx, cy, orbit.r * size, orbit.r * size * 0.94, 0, angle - 0.5, angle + 0.5,
+          cx,
+          cy,
+          orbit.r * size,
+          orbit.r * size * 0.94,
+          0,
+          angle - 0.5,
+          angle + 0.5,
         );
         context.stroke();
       }
@@ -129,7 +148,13 @@ export function OrbitCanvas() {
         context.lineWidth = 1.4;
         context.beginPath();
         context.ellipse(
-          cx, cy, progress * 0.52 * size, progress * 0.52 * size * 0.94, 0, 0, Math.PI * 2,
+          cx,
+          cy,
+          progress * 0.52 * size,
+          progress * 0.52 * size * 0.94,
+          0,
+          0,
+          Math.PI * 2,
         );
         context.stroke();
       }
@@ -157,7 +182,13 @@ export function OrbitCanvas() {
         const fade = Math.sin(Math.min(1, Math.max(0, progress)) * Math.PI);
         context.fillStyle = `rgb(${BRAND} / ${(0.85 * fade).toFixed(2)})`;
         context.beginPath();
-        context.arc(cx + (px - cx) * progress, cy + (py - cy) * progress, 2.2, 0, Math.PI * 2);
+        context.arc(
+          cx + (px - cx) * progress,
+          cy + (py - cy) * progress,
+          2.2,
+          0,
+          Math.PI * 2,
+        );
         context.fill();
       }
 
@@ -173,8 +204,13 @@ export function OrbitCanvas() {
           context.lineWidth = 2 * (1 - k / 8);
           context.beginPath();
           context.ellipse(
-            cx, cy, orbit.r * size, orbit.r * size * 0.94, 0,
-            Math.min(a0, a1), Math.max(a0, a1),
+            cx,
+            cy,
+            orbit.r * size,
+            orbit.r * size * 0.94,
+            0,
+            Math.min(a0, a1),
+            Math.max(a0, a1),
           );
           context.stroke();
         }

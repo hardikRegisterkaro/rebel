@@ -11,10 +11,14 @@ export function DualCta() {
   const { partners, careers } = ABOUT.dualCta;
 
   return (
-    <section id="cta" aria-label="Work with us" className="scroll-mt-24 bg-paper">
+    <section
+      id="cta"
+      aria-label="Work with us"
+      className="scroll-mt-24 bg-paper"
+    >
       <div className="mx-auto max-w-(--spacing-shell) px-6 py-[clamp(64px,10vh,110px)] sm:px-7">
         <div
-          data-reveal
+          data-reveal="zoom-in"
           className="grid grid-cols-1 gap-px overflow-hidden rounded-[22px] border border-black/[0.14] bg-black/[0.14] lg:grid-cols-2"
         >
           <div className={`${PANEL} bg-ink text-dark-fg`}>

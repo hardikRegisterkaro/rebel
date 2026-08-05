@@ -13,9 +13,15 @@ export function ComparisonTable({ rows }: { rows: ComparisonRow[] }) {
       className="bg-ink text-dark-fg"
     >
       <div className="mx-auto max-w-(--spacing-shell) px-6 py-[clamp(68px,10vh,116px)] sm:px-7">
-        <div data-reveal className="mb-[clamp(36px,5vh,56px)] max-w-[60ch]">
+        <div
+          data-reveal="fade-right"
+          className="mb-[clamp(36px,5vh,56px)] max-w-[60ch]"
+        >
           <p className="mb-4 inline-flex items-center gap-2.5 font-mono text-[0.68rem] tracking-[0.22em] text-brand uppercase">
-            <span aria-hidden="true" className="inline-block size-[7px] bg-brand" />
+            <span
+              aria-hidden="true"
+              className="inline-block size-[7px] bg-brand"
+            />
             The Rebel Labz Advantage
           </p>
           <h2
@@ -30,7 +36,8 @@ export function ComparisonTable({ rows }: { rows: ComparisonRow[] }) {
         </div>
 
         <div
-          data-reveal
+          data-reveal="zoom-in"
+          data-reveal-delay="1"
           className="overflow-hidden rounded-[22px] border border-white/[0.14] bg-ink-800"
         >
           <table className="w-full border-collapse text-left max-md:block">

@@ -2,13 +2,10 @@ import { CAREERS, PERKS } from "@/lib/careers";
 
 export function WhyBuildHere() {
   return (
-    <section
-      aria-labelledby="perks-heading"
-      className="bg-paper text-light-fg"
-    >
+    <section aria-labelledby="perks-heading" className="bg-paper text-light-fg">
       <div className="mx-auto max-w-(--spacing-shell) px-6 pb-[clamp(64px,10vh,110px)] sm:px-7">
         <div
-          data-reveal
+          data-reveal="fade-right"
           className="mb-[clamp(36px,5vh,56px)] flex flex-wrap items-end justify-between gap-5"
         >
           <div>
@@ -33,7 +30,8 @@ export function WhyBuildHere() {
         </div>
 
         <ul
-          data-reveal
+          data-reveal="fade-up"
+          data-reveal-delay="1"
           className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
         >
           {PERKS.map((perk) => (

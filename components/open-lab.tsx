@@ -23,7 +23,10 @@ export function OpenLab() {
       className="scroll-mt-24 bg-paper text-light-fg"
     >
       <div className="mx-auto max-w-(--spacing-shell) px-6 pt-[clamp(84px,13vh,150px)] pb-[clamp(40px,6vh,70px)] sm:px-7">
-        <p data-reveal className="mb-8 flex items-center gap-3 text-[0.74rem] tracking-[0.12em] text-light-muted-2">
+        <p
+          data-reveal
+          className="mb-8 flex items-center gap-3 text-[0.74rem] tracking-[0.12em] text-light-muted-2"
+        >
           <span className="inline-flex items-center gap-2.5 rounded-full border border-black/[0.14] px-4 py-2">
             <span
               aria-hidden="true"
@@ -95,7 +98,10 @@ export function OpenLab() {
             </span>
             <span>
               or write to{" "}
-              <a href={`mailto:${SITE.email}`} className="underline underline-offset-2 hover:text-brand">
+              <a
+                href={`mailto:${SITE.email}`}
+                className="underline underline-offset-2 hover:text-brand"
+              >
                 {SITE.email}
               </a>
             </span>

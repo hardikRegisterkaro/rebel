@@ -20,7 +20,7 @@ export function AboutHero() {
         <div className="min-w-0">
           <nav
             aria-label="Breadcrumb"
-            data-reveal
+            data-reveal="fade-up"
             className="mb-6.5 font-mono text-[0.62rem] tracking-[0.14em] uppercase"
           >
             <ol className="flex flex-wrap items-center gap-2.25">
@@ -42,7 +42,8 @@ export function AboutHero() {
           </nav>
 
           <p
-            data-reveal
+            data-reveal="fade-up"
+            data-reveal-delay="1"
             className="mb-5.5 inline-flex items-center gap-2.25 font-mono text-[0.68rem] tracking-[0.22em] text-brand uppercase"
           >
             <span
@@ -54,7 +55,8 @@ export function AboutHero() {
 
           <h1
             id="about-heading"
-            data-reveal
+            data-reveal="fade-up"
+            data-reveal-delay="2"
             className="max-w-[15ch] text-[clamp(2.4rem,5vw,4.2rem)] leading-[1.02] font-semibold tracking-[-0.025em]"
           >
             {ABOUT.hero.title}
@@ -62,13 +64,18 @@ export function AboutHero() {
           </h1>
 
           <p
-            data-reveal
+            data-reveal="fade-up"
+            data-reveal-delay="3"
             className="mt-6.5 max-w-[48ch] text-[1.125rem] leading-[1.65] text-[#b0b0b0] text-pretty"
           >
             {ABOUT.hero.lede}
           </p>
 
-          <div data-reveal className="mt-9 flex flex-wrap items-center gap-3.5">
+          <div
+            data-reveal="fade-up"
+            data-reveal-delay="4"
+            className="mt-9 flex flex-wrap items-center gap-3.5"
+          >
             <Link
               href={ABOUT.hero.primaryCta.href}
               className="group inline-flex items-center gap-2.5 rounded-full bg-white px-6.5 py-3.5 text-[0.9rem] font-semibold text-ink transition-[transform,background-color] duration-300 ease-(--ease-out-soft) hover:-translate-y-0.5 hover:bg-[#e4e4e4]"
@@ -91,7 +98,8 @@ export function AboutHero() {
         </div>
 
         <div
-          data-reveal
+          data-reveal="zoom-in"
+          data-reveal-delay="2"
           className="relative aspect-[1/0.92] min-w-0 overflow-hidden rounded-3xl border border-white/[0.12] bg-[#050505]"
         >
           <OrbitCanvas />

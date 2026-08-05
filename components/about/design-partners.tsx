@@ -10,7 +10,7 @@ export function DesignPartners() {
     >
       <div className="mx-auto max-w-(--spacing-shell) px-6 py-[clamp(64px,10vh,110px)] sm:px-7">
         <div
-          data-reveal
+          data-reveal="fade-right"
           className="mb-[clamp(36px,5vh,56px)] flex flex-wrap items-end justify-between gap-5"
         >
           <div>
@@ -35,7 +35,8 @@ export function DesignPartners() {
         </div>
 
         <ul
-          data-reveal
+          data-reveal="zoom-in"
+          data-reveal-delay="1"
           className="grid grid-cols-1 gap-px overflow-hidden rounded-[22px] border border-black/[0.14] bg-black/[0.14] sm:grid-cols-2 lg:grid-cols-3"
         >
           {PARTNER_OFFERS.map((offer) => (
@@ -60,7 +61,8 @@ export function DesignPartners() {
         </ul>
 
         <div
-          data-reveal
+          data-reveal="fade-up"
+          data-reveal-delay="2"
           className="mt-5 flex flex-wrap items-center justify-between gap-6 rounded-[22px] bg-ink p-[clamp(28px,3.4vw,40px)] text-dark-fg"
         >
           <div className="max-w-[52ch]">

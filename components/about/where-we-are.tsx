@@ -12,7 +12,7 @@ export function WhereWeAre() {
       className="scroll-mt-24 border-t border-black/[0.08] bg-paper text-light-fg"
     >
       <div className="mx-auto max-w-(--spacing-shell) px-6 py-[clamp(64px,10vh,110px)] sm:px-7">
-        <div data-reveal className="mb-[clamp(40px,6vh,64px)]">
+        <div data-reveal="fade-right" className="mb-[clamp(40px,6vh,64px)]">
           <p className="mb-4 inline-flex items-center gap-2.25 font-mono text-[0.68rem] tracking-[0.22em] text-brand uppercase">
             <span
               aria-hidden="true"
@@ -32,7 +32,11 @@ export function WhereWeAre() {
           </p>
         </div>
 
-        <ul data-reveal className={`${CELL_GRID} sm:grid-cols-2 lg:grid-cols-3`}>
+        <ul
+          data-reveal="zoom-in"
+          data-reveal-delay="1"
+          className={`${CELL_GRID} sm:grid-cols-2 lg:grid-cols-3`}
+        >
           {STORY_CARDS.map((card) => (
             <li
               key={card.title}

@@ -124,7 +124,9 @@ export function Frameworks() {
             >
               <span
                 className="absolute inset-y-0 left-0 w-1/4 origin-left bg-brand"
-                style={{ transform: `translateX(${(progress * 300).toFixed(1)}%)` }}
+                style={{
+                  transform: `translateX(${(progress * 300).toFixed(1)}%)`,
+                }}
               />
             </div>
             <span className="font-mono text-[0.58rem] tracking-[0.16em] whitespace-nowrap text-dark-faint">

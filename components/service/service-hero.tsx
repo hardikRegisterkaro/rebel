@@ -20,7 +20,7 @@ export function ServiceHero({ solution }: { solution: Solution }) {
         <div className="min-w-0">
           <nav
             aria-label="Breadcrumb"
-            data-reveal
+            data-reveal="fade-up"
             className="mb-7.5 font-mono text-[0.62rem] tracking-[0.14em] uppercase"
           >
             <ol className="flex flex-wrap items-center gap-2.5">
@@ -42,16 +42,21 @@ export function ServiceHero({ solution }: { solution: Solution }) {
           </nav>
 
           <p
-            data-reveal
+            data-reveal="fade-up"
+            data-reveal-delay="1"
             className="mb-6.5 inline-flex items-center gap-2.5 rounded-full border border-brand/40 px-3.5 py-1.5 font-mono text-[0.64rem] tracking-[0.2em] text-brand uppercase"
           >
-            <span aria-hidden="true" className="inline-block size-1.5 bg-brand" />
+            <span
+              aria-hidden="true"
+              className="inline-block size-1.5 bg-brand"
+            />
             {solution.pillar}
           </p>
 
           <h1
             id="service-heading"
-            data-reveal
+            data-reveal="fade-up"
+            data-reveal-delay="2"
             className="max-w-[14ch] text-[clamp(2.6rem,5.6vw,4.6rem)] leading-[1.01] font-semibold tracking-[-0.028em]"
           >
             {solution.title}
@@ -59,13 +64,18 @@ export function ServiceHero({ solution }: { solution: Solution }) {
           </h1>
 
           <p
-            data-reveal
+            data-reveal="fade-up"
+            data-reveal-delay="3"
             className="mt-6.5 max-w-[44ch] text-[clamp(1.05rem,1.5vw,1.32rem)] leading-relaxed text-[#b0b0b0]"
           >
             {solution.tagline}
           </p>
 
-          <div data-reveal className="mt-10 flex flex-wrap items-center gap-3.5">
+          <div
+            data-reveal="fade-up"
+            data-reveal-delay="4"
+            className="mt-10 flex flex-wrap items-center gap-3.5"
+          >
             <Link
               href="#offerings"
               className="inline-flex items-center gap-2.5 rounded-full bg-white px-7 py-4 text-[0.92rem] font-semibold text-ink transition-[transform,background-color] duration-300 ease-(--ease-out-soft) hover:-translate-y-0.5 hover:bg-[#e7e7e4]"
@@ -87,7 +97,8 @@ export function ServiceHero({ solution }: { solution: Solution }) {
           </div>
 
           <dl
-            data-reveal
+            data-reveal="fade-up"
+            data-reveal-delay="5"
             className="mt-11 flex flex-wrap gap-x-[46px] gap-y-6 border-t border-white/10 pt-6.5"
           >
             {solution.stats.map((stat) => (
@@ -104,7 +115,8 @@ export function ServiceHero({ solution }: { solution: Solution }) {
         </div>
 
         <div
-          data-reveal
+          data-reveal="zoom-in"
+          data-reveal-delay="2"
           className="relative aspect-[1/0.9] min-w-0 overflow-hidden rounded-3xl border border-white/[0.12] bg-[#050505]"
         >
           <Image

@@ -10,7 +10,7 @@ export function ServiceContact({ solution }: { solution: Solution }) {
       className="scroll-mt-24 border-t border-black/[0.08] bg-paper text-light-fg"
     >
       <div className="mx-auto grid grid-cols-1 max-w-(--spacing-shell) items-start gap-[clamp(36px,5vw,80px)] px-6 pt-[clamp(72px,11vh,124px)] pb-[clamp(64px,9vh,100px)] sm:px-7 lg:grid-cols-[1.05fr_0.95fr]">
-        <div data-reveal>
+        <div data-reveal="fade-right">
           <p className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-black/[0.14] px-4 py-2 text-[0.74rem] tracking-[0.12em] text-light-muted-2">
             <span
               aria-hidden="true"

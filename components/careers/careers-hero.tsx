@@ -18,7 +18,7 @@ export function CareersHero() {
       <div className="relative mx-auto max-w-(--spacing-shell) px-6 pt-[clamp(48px,7vh,72px)] pb-[clamp(64px,10vh,110px)] sm:px-7">
         <nav
           aria-label="Breadcrumb"
-          data-reveal
+          data-reveal="fade-up"
           className="mb-8.5 font-mono text-[0.62rem] tracking-[0.14em] uppercase"
         >
           <ol className="flex flex-wrap items-center justify-center gap-2.25">
@@ -41,7 +41,8 @@ export function CareersHero() {
 
         <div className="mx-auto flex max-w-[820px] flex-col items-center text-center">
           <p
-            data-reveal
+            data-reveal="fade-up"
+            data-reveal-delay="1"
             className="mb-7.5 inline-flex items-center gap-2.25 rounded-full border border-white/[0.16] px-3.75 py-1.75 font-mono text-[0.66rem] tracking-[0.2em] text-dark-fg-2 uppercase"
           >
             <span
@@ -53,7 +54,8 @@ export function CareersHero() {
 
           <h1
             id="careers-heading"
-            data-reveal
+            data-reveal="fade-up"
+            data-reveal-delay="2"
             className="text-[clamp(2.4rem,5.4vw,4.2rem)] leading-[1.02] font-semibold tracking-[-0.03em] text-pretty"
           >
             {CAREERS.hero.title}{" "}
@@ -61,13 +63,14 @@ export function CareersHero() {
           </h1>
 
           <p
-            data-reveal
+            data-reveal="fade-up"
+            data-reveal-delay="3"
             className="mt-6 max-w-[52ch] text-[1.125rem] leading-[1.65] text-[#a8a8a8] text-pretty"
           >
             {CAREERS.hero.lede}
           </p>
 
-          <div data-reveal className="mt-9">
+          <div data-reveal="fade-up" data-reveal-delay="4" className="mt-9">
             <Link
               href={CAREERS.hero.cta.href}
               className="group inline-flex items-center gap-2.5 rounded-full bg-brand px-6.5 py-3.5 text-[0.9rem] font-semibold text-white transition-[transform,box-shadow] duration-300 ease-(--ease-out-soft) hover:-translate-y-0.5 hover:shadow-[0_16px_34px_-14px_rgb(255_51_51/0.75)]"

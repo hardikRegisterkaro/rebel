@@ -7,7 +7,7 @@ export function OperationalStandards() {
       className="bg-ink text-dark-fg"
     >
       <div className="mx-auto grid grid-cols-1 max-w-(--spacing-shell) items-start gap-[clamp(32px,5vw,64px)] px-6 py-[clamp(64px,10vh,110px)] sm:px-7 lg:grid-cols-[0.85fr_1.15fr]">
-        <div data-reveal>
+        <div data-reveal="fade-right">
           <p className="mb-4 inline-flex items-center gap-2.25 font-mono text-[0.68rem] tracking-[0.22em] text-brand uppercase">
             <span
               aria-hidden="true"
@@ -28,7 +28,8 @@ export function OperationalStandards() {
         </div>
 
         <ul
-          data-reveal
+          data-reveal="zoom-in"
+          data-reveal-delay="1"
           className="grid grid-cols-1 gap-px overflow-hidden rounded-[22px] border border-white/[0.14] bg-white/[0.14] sm:grid-cols-2"
         >
           {BADGES.map((badge) => (

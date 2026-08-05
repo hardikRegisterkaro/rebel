@@ -51,12 +51,15 @@ export function ContactForm() {
   if (sent) {
     return (
       <div
-        data-reveal
+        data-reveal="fade-right"
         className="rounded-[22px] border border-black/[0.14] bg-paper p-[clamp(26px,3vw,40px)] shadow-[0_24px_60px_-40px_rgb(0_0_0/0.35)]"
       >
         <div className="flex flex-col items-start gap-4.5 px-1 py-6">
           <p className="inline-flex items-center gap-2 font-mono text-[0.62rem] tracking-[0.2em] text-brand uppercase">
-            <span aria-hidden="true" className="inline-block size-1.5 bg-brand" />
+            <span
+              aria-hidden="true"
+              className="inline-block size-1.5 bg-brand"
+            />
             Signal received
           </p>
           <h3 className="text-[1.6rem] font-semibold tracking-[-0.015em]">
@@ -88,7 +91,7 @@ export function ContactForm() {
 
   return (
     <div
-      data-reveal
+      data-reveal="fade-right"
       className="rounded-[22px] border border-black/[0.14] bg-paper p-[clamp(26px,3vw,40px)] shadow-[0_24px_60px_-40px_rgb(0_0_0/0.35)]"
     >
       <div className="mb-6.5 flex items-center justify-between gap-3">

@@ -31,7 +31,8 @@ function sine(amplitude: number, cycles: number, midline = MID) {
   let d = "";
   for (let i = 0; i <= steps; i++) {
     const x = X0 + (SPAN * i) / steps;
-    const y = midline - amplitude * Math.sin((cycles * 2 * Math.PI * i) / steps);
+    const y =
+      midline - amplitude * Math.sin((cycles * 2 * Math.PI * i) / steps);
     d += `${i ? "L" : "M"}${x.toFixed(1)} ${y.toFixed(1)} `;
   }
   return d;
@@ -94,7 +95,14 @@ type PathProps = {
   pathLength?: number;
 };
 
-const Path = ({ d, stroke, width = 1.4, style, dash, pathLength }: PathProps) => (
+const Path = ({
+  d,
+  stroke,
+  width = 1.4,
+  style,
+  dash,
+  pathLength,
+}: PathProps) => (
   <path
     d={d}
     fill="none"
@@ -141,14 +149,36 @@ const STAGES: Record<number, () => ReactNode> = {
     const cells = 11;
     return (
       <>
-        <Path d={square(9, 6, topY)} stroke="rgb(255 255 255 / 0.16)" width={1.1} />
-        <Path d={`M${X0} ${MID + 24} L${X1} ${MID + 24}`} stroke={FAINTER} width={0.8} />
+        <Path
+          d={square(9, 6, topY)}
+          stroke="rgb(255 255 255 / 0.16)"
+          width={1.1}
+        />
+        <Path
+          d={`M${X0} ${MID + 24} L${X1} ${MID + 24}`}
+          stroke={FAINTER}
+          width={0.8}
+        />
         {Array.from({ length: cells }, (_, i) => {
           const x = X0 + (SPAN * (i + 0.5)) / cells;
           return (
             <g key={i}>
-              <line x1={x} y1={topY + 9} x2={x} y2={MID + 6} stroke="rgb(255 255 255 / 0.07)" strokeWidth="0.6" />
-              <line x1={x} y1={MID + 8} x2={x} y2={MID + 24} stroke={FAINTER} strokeWidth="2" />
+              <line
+                x1={x}
+                y1={topY + 9}
+                x2={x}
+                y2={MID + 6}
+                stroke="rgb(255 255 255 / 0.07)"
+                strokeWidth="0.6"
+              />
+              <line
+                x1={x}
+                y1={MID + 8}
+                x2={x}
+                y2={MID + 24}
+                stroke={FAINTER}
+                strokeWidth="2"
+              />
               <line
                 x1={x}
                 y1={MID + 24}
@@ -167,7 +197,14 @@ const STAGES: Record<number, () => ReactNode> = {
           );
         })}
         <g style={{ animation: loop("sig-scan", 4.6, "ease-in-out") }}>
-          <line x1={X0} y1={MID - 28} x2={X0} y2={MID + 27} stroke={BRAND} strokeWidth="1.4" />
+          <line
+            x1={X0}
+            y1={MID - 28}
+            x2={X0}
+            y2={MID + 27}
+            stroke={BRAND}
+            strokeWidth="1.4"
+          />
           <circle cx={X0} cy={MID - 28} r="2.6" fill={BRAND} />
         </g>
       </>
@@ -177,17 +214,42 @@ const STAGES: Record<number, () => ReactNode> = {
   // 03 · Collective Knowledge — a living graph; links form one at a time.
   3: () => {
     const nodes: [number, number][] = [
-      [26, 88], [66, 32], [114, 76], [102, 22], [158, 50],
-      [144, 96], [198, 26], [212, 74], [240, 46],
+      [26, 88],
+      [66, 32],
+      [114, 76],
+      [102, 22],
+      [158, 50],
+      [144, 96],
+      [198, 26],
+      [212, 74],
+      [240, 46],
     ];
     const edges: [number, number][] = [
-      [0, 1], [1, 2], [1, 3], [2, 4], [3, 4], [4, 5],
-      [4, 6], [6, 8], [5, 7], [7, 8], [2, 5], [6, 7],
+      [0, 1],
+      [1, 2],
+      [1, 3],
+      [2, 4],
+      [3, 4],
+      [4, 5],
+      [4, 6],
+      [6, 8],
+      [5, 7],
+      [7, 8],
+      [2, 5],
+      [6, 7],
     ];
     return (
       <>
         {edges.map(([a, b], i) => (
-          <line key={`b${i}`} x1={nodes[a][0]} y1={nodes[a][1]} x2={nodes[b][0]} y2={nodes[b][1]} stroke={FAINTER} strokeWidth="0.7" />
+          <line
+            key={`b${i}`}
+            x1={nodes[a][0]}
+            y1={nodes[a][1]}
+            x2={nodes[b][0]}
+            y2={nodes[b][1]}
+            stroke={FAINTER}
+            strokeWidth="0.7"
+          />
         ))}
         {edges.map(([a, b], i) => (
           <line
@@ -198,11 +260,24 @@ const STAGES: Record<number, () => ReactNode> = {
             y2={nodes[b][1]}
             stroke={BRAND}
             strokeWidth="0.9"
-            style={{ animation: loop("sig-appear", 5.2, "ease-in-out", -5.2 + i * 0.42) }}
+            style={{
+              animation: loop(
+                "sig-appear",
+                5.2,
+                "ease-in-out",
+                -5.2 + i * 0.42,
+              ),
+            }}
           />
         ))}
         {nodes.map(([x, y], i) => (
-          <circle key={`n${i}`} cx={x} cy={y} r={i === 4 ? 2.8 : 2.1} fill={i === 4 ? BRAND : FG} />
+          <circle
+            key={`n${i}`}
+            cx={x}
+            cy={y}
+            r={i === 4 ? 2.8 : 2.1}
+            fill={i === 4 ? BRAND : FG}
+          />
         ))}
       </>
     );
@@ -225,8 +300,16 @@ const STAGES: Record<number, () => ReactNode> = {
           dash="20 100"
           style={{ animation: loop("trace-flow", 3.2) }}
         />
-        <Path d={`M${X0 + 118} ${MID - 26.5} L${X0 + 126} ${MID - 22} L${X0 + 118} ${MID - 17.5}`} stroke={FG} width={1.2} />
-        <Path d={`M${X0 + 126} ${MID + 17.5} L${X0 + 118} ${MID + 22} L${X0 + 126} ${MID + 26.5}`} stroke={FG} width={1.2} />
+        <Path
+          d={`M${X0 + 118} ${MID - 26.5} L${X0 + 126} ${MID - 22} L${X0 + 118} ${MID - 17.5}`}
+          stroke={FG}
+          width={1.2}
+        />
+        <Path
+          d={`M${X0 + 126} ${MID + 17.5} L${X0 + 118} ${MID + 22} L${X0 + 126} ${MID + 26.5}`}
+          stroke={FG}
+          width={1.2}
+        />
         <text
           x={(X0 + X1) / 2}
           y={MID + 3.5}
@@ -289,14 +372,34 @@ const STAGES: Record<number, () => ReactNode> = {
               y2={y}
               stroke={`rgb(255 255 255 / ${(0.16 + i * 0.11).toFixed(2)})`}
               strokeWidth="1"
-              style={{ animation: loop("sig-retain", 3.4, "ease-in-out", -i * 0.5) }}
+              style={{
+                animation: loop("sig-retain", 3.4, "ease-in-out", -i * 0.5),
+              }}
             />
           );
         })}
-        <Path d={`M${X0 + 84} ${MID - 1} L${cx} ${MID + 13}`} stroke={FAINT} width={1} />
-        <Path d={`M${X1 - 84} ${MID - 1} L${cx} ${MID + 13}`} stroke={FAINT} width={1} />
-        <circle cx={cx} cy={MID + 16} r="2.4" fill={BRAND} style={{ animation: loop("sig-drip", 2.6, "ease-in") }} />
-        <Path d={`M${X0 + 44} ${MID + 42} L${X1 - 44} ${MID + 42}`} stroke={FG} width={1.8} />
+        <Path
+          d={`M${X0 + 84} ${MID - 1} L${cx} ${MID + 13}`}
+          stroke={FAINT}
+          width={1}
+        />
+        <Path
+          d={`M${X1 - 84} ${MID - 1} L${cx} ${MID + 13}`}
+          stroke={FAINT}
+          width={1}
+        />
+        <circle
+          cx={cx}
+          cy={MID + 16}
+          r="2.4"
+          fill={BRAND}
+          style={{ animation: loop("sig-drip", 2.6, "ease-in") }}
+        />
+        <Path
+          d={`M${X0 + 44} ${MID + 42} L${X1 - 44} ${MID + 42}`}
+          stroke={FG}
+          width={1.8}
+        />
         <Path
           d={`M${X0 + 44} ${MID + 42} L${X1 - 44} ${MID + 42}`}
           stroke={BRAND}
@@ -314,10 +417,32 @@ const STAGES: Record<number, () => ReactNode> = {
     const d = sine(14, 8);
     return (
       <>
-        <line x1={X0} y1={MID - 30} x2={X0} y2={MID + 30} stroke={FAINT} strokeWidth="1" />
-        <line x1={X1} y1={MID - 30} x2={X1} y2={MID + 30} stroke={FAINT} strokeWidth="1" />
-        <Path d={`M${X0} ${MID - 30} L${X1} ${MID - 30}`} stroke={FAINTER} width={0.6} />
-        <Path d={`M${X0} ${MID + 30} L${X1} ${MID + 30}`} stroke={FAINTER} width={0.6} />
+        <line
+          x1={X0}
+          y1={MID - 30}
+          x2={X0}
+          y2={MID + 30}
+          stroke={FAINT}
+          strokeWidth="1"
+        />
+        <line
+          x1={X1}
+          y1={MID - 30}
+          x2={X1}
+          y2={MID + 30}
+          stroke={FAINT}
+          strokeWidth="1"
+        />
+        <Path
+          d={`M${X0} ${MID - 30} L${X1} ${MID - 30}`}
+          stroke={FAINTER}
+          width={0.6}
+        />
+        <Path
+          d={`M${X0} ${MID + 30} L${X1} ${MID + 30}`}
+          stroke={FAINTER}
+          width={0.6}
+        />
         <Path d={d} stroke={BASE} width={1.5} />
         <g
           style={{
@@ -381,7 +506,12 @@ const STAGES: Record<number, () => ReactNode> = {
                 style={{
                   transformBox: "fill-box",
                   transformOrigin: "bottom",
-                  animation: loop("sig-sprout", 4.6, "ease-in-out", 1.7 + i * 0.3),
+                  animation: loop(
+                    "sig-sprout",
+                    4.6,
+                    "ease-in-out",
+                    1.7 + i * 0.3,
+                  ),
                 }}
               />
               <circle
@@ -389,7 +519,14 @@ const STAGES: Record<number, () => ReactNode> = {
                 cy={MID + 12 - height}
                 r="1.7"
                 fill={BRAND}
-                style={{ animation: loop("sig-appear", 4.6, "ease-in-out", 2.1 + i * 0.3) }}
+                style={{
+                  animation: loop(
+                    "sig-appear",
+                    4.6,
+                    "ease-in-out",
+                    2.1 + i * 0.3,
+                  ),
+                }}
               />
             </g>
           );
@@ -414,7 +551,9 @@ const STAGES: Record<number, () => ReactNode> = {
                 width={1.3}
                 pathLength={100}
                 dash="18 100"
-                style={{ animation: loop("trace-flow", 3, "linear", -i * 0.45) }}
+                style={{
+                  animation: loop("trace-flow", 3, "linear", -i * 0.45),
+                }}
               />
               <circle cx={X0} cy={MID + offset} r="2" fill={FG} />
             </g>

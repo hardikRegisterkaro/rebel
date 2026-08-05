@@ -35,7 +35,7 @@ export function RoleBoard() {
     >
       <div className="mx-auto max-w-(--spacing-shell) px-6 py-[clamp(64px,10vh,110px)] sm:px-7">
         <div
-          data-reveal
+          data-reveal="fade-right"
           className="mb-[clamp(32px,4.5vh,48px)] flex flex-wrap items-end justify-between gap-5"
         >
           <div>
@@ -60,7 +60,8 @@ export function RoleBoard() {
         </div>
 
         <div
-          data-reveal
+          data-reveal="fade-up"
+          data-reveal-delay="1"
           className="mb-7 flex flex-wrap gap-2"
           role="group"
           aria-label="Filter roles by discipline"
@@ -88,7 +89,11 @@ export function RoleBoard() {
           })}
         </div>
 
-        <ul data-reveal className="flex flex-col">
+        <ul
+          data-reveal="fade-up"
+          data-reveal-delay="2"
+          className="flex flex-col"
+        >
           {visible.map((role) => (
             <li
               key={role.title}

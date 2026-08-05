@@ -14,7 +14,10 @@ export function WhyUs() {
         <div className="mb-[clamp(40px,6vh,64px)] flex flex-wrap items-end justify-between gap-6">
           <div data-reveal="fade-right">
             <p className="mb-4.5 inline-flex items-center gap-2.5 font-mono text-[0.7rem] tracking-[0.22em] text-brand uppercase">
-              <span aria-hidden="true" className="inline-block size-[7px] bg-brand" />
+              <span
+                aria-hidden="true"
+                className="inline-block size-[7px] bg-brand"
+              />
               Why Choose Us
             </p>
             <h2
@@ -54,7 +57,10 @@ export function WhyUs() {
               </span>
 
               <p className="inline-flex items-center gap-2 font-mono text-[0.64rem] tracking-[0.15em] text-brand">
-                <span aria-hidden="true" className="inline-block size-1.5 bg-brand" />
+                <span
+                  aria-hidden="true"
+                  className="inline-block size-1.5 bg-brand"
+                />
                 {`${item.num} // ${item.code}`}
               </p>
               <p className="mt-5.5 font-mono text-[0.6rem] tracking-[0.16em] text-light-faint uppercase">
@@ -66,7 +72,10 @@ export function WhyUs() {
               <p className="mt-3.5 mb-7 text-[0.9rem] leading-relaxed text-light-muted">
                 {item.body}
               </p>
-              <span aria-hidden="true" className="mt-auto h-0.5 w-[38px] bg-brand" />
+              <span
+                aria-hidden="true"
+                className="mt-auto h-0.5 w-[38px] bg-brand"
+              />
             </li>
           ))}
         </ul>
@@ -76,7 +85,10 @@ export function WhyUs() {
           className="mt-5 flex flex-wrap items-center gap-x-5.5 gap-y-3 font-mono text-[0.62rem] tracking-[0.16em] text-light-muted-2 uppercase"
         >
           <span className="inline-flex items-center gap-2.5">
-            <span aria-hidden="true" className="inline-block size-1.5 bg-brand" />
+            <span
+              aria-hidden="true"
+              className="inline-block size-1.5 bg-brand"
+            />
             {ENGAGEMENT_TERMS[0]}
           </span>
           <span aria-hidden="true" className="text-black/25">

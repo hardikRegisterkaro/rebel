@@ -14,7 +14,7 @@ export function ContactFaq() {
     >
       <div className="mx-auto max-w-[900px] px-6 py-[clamp(64px,10vh,110px)] sm:px-7">
         <div
-          data-reveal
+          data-reveal="fade-up"
           className="mb-[clamp(32px,4.5vh,48px)] flex flex-col items-center text-center"
         >
           <p className="mb-4 inline-flex items-center gap-2.25 font-mono text-[0.68rem] tracking-[0.22em] text-brand uppercase">
@@ -36,7 +36,11 @@ export function ContactFaq() {
           </p>
         </div>
 
-        <div data-reveal className="flex flex-col gap-3">
+        <div
+          data-reveal="fade-up"
+          data-reveal-delay="1"
+          className="flex flex-col gap-3"
+        >
           {CONTACT_FAQS.map((faq) => (
             <details
               key={faq.question}

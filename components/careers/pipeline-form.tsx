@@ -52,12 +52,16 @@ export function PipelineForm() {
   if (sent) {
     return (
       <div
-        data-reveal
+        data-reveal="fade-left"
+        data-reveal-delay="1"
         className="rounded-[22px] border border-black/[0.12] bg-paper p-[clamp(26px,3vw,38px)]"
       >
         <div className="flex flex-col items-start gap-4 px-1 py-5">
           <p className="inline-flex items-center gap-2 font-mono text-[0.62rem] tracking-[0.2em] text-brand uppercase">
-            <span aria-hidden="true" className="inline-block size-1.5 bg-brand" />
+            <span
+              aria-hidden="true"
+              className="inline-block size-1.5 bg-brand"
+            />
             Added to the pipeline
           </p>
           <h3 className="text-2xl font-semibold tracking-[-0.015em]">
@@ -89,7 +93,8 @@ export function PipelineForm() {
 
   return (
     <div
-      data-reveal
+      data-reveal="fade-left"
+      data-reveal-delay="1"
       className="rounded-[22px] border border-black/[0.12] bg-paper p-[clamp(26px,3vw,38px)]"
     >
       <p className="mb-7 font-mono text-[0.62rem] tracking-[0.2em] text-brand uppercase">

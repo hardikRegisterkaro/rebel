@@ -27,11 +27,13 @@ export function Philosophy() {
             </h2>
           </div>
           <p className="max-w-[46ch] text-[clamp(1rem,1.3vw,1.15rem)] leading-relaxed text-light-fg-2">
-            Living systems that bridge <em className="italic">human cognition</em>,{" "}
+            Living systems that bridge{" "}
+            <em className="italic">human cognition</em>,{" "}
             <em className="italic">machine memory</em>, and{" "}
-            <em className="italic">collective wisdom</em> — small, efficient, and
-            affordable, so intelligence is measured by how well an organization{" "}
-            <em className="italic">adapts</em>, never by how much it computes.
+            <em className="italic">collective wisdom</em> — small, efficient,
+            and affordable, so intelligence is measured by how well an
+            organization <em className="italic">adapts</em>, never by how much
+            it computes.
           </p>
         </div>
 

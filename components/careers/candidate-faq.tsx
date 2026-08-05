@@ -14,7 +14,7 @@ export function CandidateFaq() {
       className="scroll-mt-24 border-t border-white/10 bg-ink text-dark-fg"
     >
       <div className="mx-auto grid grid-cols-1 max-w-(--spacing-shell) items-start gap-[clamp(32px,5vw,72px)] px-6 py-[clamp(64px,10vh,110px)] sm:px-7 lg:grid-cols-[0.8fr_1.2fr]">
-        <div data-reveal>
+        <div data-reveal="fade-right">
           <p className="mb-4 inline-flex items-center gap-2.25 font-mono text-[0.68rem] tracking-[0.22em] text-brand uppercase">
             <span
               aria-hidden="true"
@@ -35,7 +35,8 @@ export function CandidateFaq() {
         </div>
 
         <div
-          data-reveal
+          data-reveal="fade-left"
+          data-reveal-delay="1"
           className="flex flex-col overflow-hidden rounded-[22px] border border-white/[0.12] bg-ink-700"
         >
           {CANDIDATE_FAQS.map((faq, index) => (

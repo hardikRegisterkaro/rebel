@@ -18,7 +18,10 @@ export function Hero() {
           className="mb-8 flex flex-wrap items-center gap-x-3.5 gap-y-2.5 text-[0.72rem] tracking-[0.24em] text-dark-muted uppercase"
         >
           <span className="inline-flex items-center gap-2.5 rounded-full border border-white/15 px-3.5 py-[7px]">
-            <span aria-hidden="true" className="inline-block size-[7px] bg-brand" />
+            <span
+              aria-hidden="true"
+              className="inline-block size-[7px] bg-brand"
+            />
             {HERO.eyebrow}
           </span>
         </p>

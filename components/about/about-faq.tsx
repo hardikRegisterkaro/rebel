@@ -10,10 +10,13 @@ export function AboutFaq() {
     >
       <div className="mx-auto max-w-(--spacing-shell) px-6 py-[clamp(64px,10vh,110px)] sm:px-7">
         <p
-          data-reveal
+          data-reveal="fade-right"
           className="mb-4 inline-flex items-center gap-2.25 font-mono text-[0.68rem] tracking-[0.22em] text-brand uppercase"
         >
-          <span aria-hidden="true" className="inline-block size-[7px] bg-brand" />
+          <span
+            aria-hidden="true"
+            className="inline-block size-[7px] bg-brand"
+          />
           {ABOUT.faq.eyebrow}
         </p>
         <h2
@@ -25,7 +28,8 @@ export function AboutFaq() {
         </h2>
 
         <div
-          data-reveal
+          data-reveal="fade-up"
+          data-reveal-delay="1"
           className="flex max-w-[900px] flex-col border-t border-white/[0.14]"
         >
           {ABOUT_FAQS.map((faq) => (

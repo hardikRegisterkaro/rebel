@@ -22,7 +22,11 @@ export function SiteFooter() {
         </div>
 
         {FOOTER_GROUPS.map((group) => (
-          <nav key={group.label} aria-label={group.label} className="flex flex-col gap-3">
+          <nav
+            key={group.label}
+            aria-label={group.label}
+            className="flex flex-col gap-3"
+          >
             <h2 className="mb-1 font-mono text-[0.6rem] tracking-[0.2em] text-dark-faint-2 uppercase">
               {group.label}
             </h2>
@@ -46,7 +50,10 @@ export function SiteFooter() {
             © {new Date().getFullYear()} {SITE.name}. All rights reserved.
           </span>
           <span className="inline-flex items-center gap-2">
-            <span aria-hidden="true" className="inline-block size-[5px] bg-brand" />
+            <span
+              aria-hidden="true"
+              className="inline-block size-[5px] bg-brand"
+            />
             Built in the open
           </span>
         </div>

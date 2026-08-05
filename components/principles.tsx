@@ -15,7 +15,10 @@ export function Principles() {
       >
         <div className="max-w-[460px]">
           <p className="mb-4.5 flex items-center gap-2.5 text-[0.72rem] tracking-[0.24em] text-dark-muted uppercase">
-            <span aria-hidden="true" className="inline-block size-[7px] bg-brand" />
+            <span
+              aria-hidden="true"
+              className="inline-block size-[7px] bg-brand"
+            />
             Foundational Principles
           </p>
           <h2

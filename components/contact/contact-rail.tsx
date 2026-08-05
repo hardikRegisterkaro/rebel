@@ -11,8 +11,15 @@ const RAIL_CARD =
 export function ContactRail() {
   return (
     <div className="flex flex-col gap-4">
-      <div data-reveal className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Link href={`mailto:${SITE.email}`} className={`flex flex-col gap-2 ${RAIL_CARD}`}>
+      <div
+        data-reveal="fade-left"
+        data-reveal-delay="1"
+        className="grid grid-cols-1 gap-4 sm:grid-cols-2"
+      >
+        <Link
+          href={`mailto:${SITE.email}`}
+          className={`flex flex-col gap-2 ${RAIL_CARD}`}
+        >
           <span className="font-mono text-[0.58rem] tracking-[0.16em] text-brand uppercase">
             Fastest
           </span>
@@ -34,7 +41,8 @@ export function ContactRail() {
       </div>
 
       <div
-        data-reveal
+        data-reveal="fade-left"
+        data-reveal-delay="2"
         className="rounded-[20px] bg-ink-800 px-6 py-6.5 text-dark-fg"
       >
         <p className="mb-5 font-mono text-[0.6rem] tracking-[0.2em] text-brand uppercase">
@@ -55,7 +63,8 @@ export function ContactRail() {
       </div>
 
       <div
-        data-reveal
+        data-reveal="fade-left"
+        data-reveal-delay="3"
         className="overflow-hidden rounded-[20px] border border-black/[0.14] bg-paper"
       >
         {/* Abstract "remote-first" panel — a grid with a single pulsing node
@@ -99,7 +108,9 @@ export function ContactRail() {
                 </dt>
                 <dd
                   className={`font-mono text-[0.72rem] ${
-                    "accent" in row && row.accent ? "text-brand" : "text-light-fg"
+                    "accent" in row && row.accent
+                      ? "text-brand"
+                      : "text-light-fg"
                   }`}
                 >
                   {row.value}

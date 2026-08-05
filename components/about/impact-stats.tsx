@@ -4,8 +4,13 @@ export function ImpactStats() {
   return (
     <section aria-label="Impact so far" className="bg-brand text-white">
       <dl className="mx-auto grid grid-cols-2 max-w-(--spacing-shell) gap-[clamp(20px,3vw,40px)] px-6 py-[clamp(48px,7vh,72px)] sm:px-7 lg:grid-cols-4">
-        {IMPACT_STATS.map((stat) => (
-          <div key={stat.label} className="flex flex-col gap-2">
+        {IMPACT_STATS.map((stat, index) => (
+          <div
+            key={stat.label}
+            data-reveal="fade-up"
+            data-reveal-delay={index + 1}
+            className="flex flex-col gap-2"
+          >
             <dd className="text-[clamp(2.4rem,4.4vw,3.4rem)] leading-none font-bold tracking-[-0.03em]">
               {stat.value}
             </dd>

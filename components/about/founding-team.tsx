@@ -41,7 +41,7 @@ export function FoundingTeam() {
       className="border-t border-white/10 bg-ink text-dark-fg"
     >
       <div className="mx-auto max-w-(--spacing-shell) px-6 py-[clamp(64px,10vh,110px)] sm:px-7">
-        <div data-reveal className="mb-[clamp(36px,5vh,56px)]">
+        <div data-reveal="fade-right" className="mb-[clamp(36px,5vh,56px)]">
           <p className="mb-4 inline-flex items-center gap-2.25 font-mono text-[0.68rem] tracking-[0.22em] text-brand uppercase">
             <span
               aria-hidden="true"
@@ -59,7 +59,8 @@ export function FoundingTeam() {
         </div>
 
         <ul
-          data-reveal
+          data-reveal="fade-up"
+          data-reveal-delay="1"
           className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
         >
           {TEAM.map((member) => (

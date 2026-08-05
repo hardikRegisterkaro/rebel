@@ -16,9 +16,12 @@ export function FaqSection({ faqs }: { faqs: Faq[] }) {
       className="scroll-mt-24 bg-paper text-light-fg"
     >
       <div className="mx-auto grid grid-cols-1 max-w-(--spacing-shell) items-start gap-[clamp(32px,5vw,72px)] px-6 py-[clamp(68px,10vh,116px)] sm:px-7 lg:grid-cols-[0.8fr_1.2fr]">
-        <div data-reveal>
+        <div data-reveal="fade-right">
           <p className="mb-4 inline-flex items-center gap-2.5 font-mono text-[0.68rem] tracking-[0.22em] text-brand uppercase">
-            <span aria-hidden="true" className="inline-block size-[7px] bg-brand" />
+            <span
+              aria-hidden="true"
+              className="inline-block size-[7px] bg-brand"
+            />
             Questions &amp; Answers
           </p>
           <h2
@@ -45,7 +48,8 @@ export function FaqSection({ faqs }: { faqs: Faq[] }) {
         </div>
 
         <div
-          data-reveal
+          data-reveal="fade-left"
+          data-reveal-delay="1"
           className="flex flex-col overflow-hidden rounded-[22px] border border-black/[0.12] bg-paper"
         >
           {faqs.map((faq, index) => (

@@ -7,7 +7,7 @@ export function CoreValues() {
       className="bg-paper text-light-fg"
     >
       <div className="mx-auto max-w-(--spacing-shell) px-6 pb-[clamp(64px,10vh,110px)] sm:px-7">
-        <div data-reveal className="mb-[clamp(36px,5vh,56px)]">
+        <div data-reveal="fade-right" className="mb-[clamp(36px,5vh,56px)]">
           <p className="mb-4 inline-flex items-center gap-2.25 font-mono text-[0.68rem] tracking-[0.22em] text-brand uppercase">
             <span
               aria-hidden="true"
@@ -25,7 +25,8 @@ export function CoreValues() {
         </div>
 
         <ul
-          data-reveal
+          data-reveal="zoom-in"
+          data-reveal-delay="1"
           className="grid grid-cols-1 gap-px overflow-hidden rounded-[22px] border border-black/[0.14] bg-black/[0.14] sm:grid-cols-2 lg:grid-cols-4"
         >
           {VALUES.map((value) => (

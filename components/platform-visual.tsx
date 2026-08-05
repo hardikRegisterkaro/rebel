@@ -121,7 +121,10 @@ function MemoryRadar() {
 
       {/* Held traces, each ring drifting at its own rate */}
       {ORBITS.map((orbit) => (
-        <g key={`orbit-${orbit.radius}`} style={spin(orbit.seconds, orbit.reverse)}>
+        <g
+          key={`orbit-${orbit.radius}`}
+          style={spin(orbit.seconds, orbit.reverse)}
+        >
           {orbit.dots.map(([angle, size, isBrand], index) => {
             const radians = (angle * Math.PI) / 180;
             return (
@@ -203,11 +206,25 @@ function AdaptiveBranches() {
         ))}
       </g>
 
-      <line x1="-20" y1="100" x2="80" y2="100" stroke="#8A93A8" strokeOpacity="0.2" strokeWidth="1.4" />
+      <line
+        x1="-20"
+        y1="100"
+        x2="80"
+        y2="100"
+        stroke="#8A93A8"
+        strokeOpacity="0.2"
+        strokeWidth="1.4"
+      />
 
       {BRANCHES.map(({ path }, index) => (
         <g key={path}>
-          <path d={path} fill="none" stroke="#8A93A8" strokeOpacity="0.2" strokeWidth="1.4" />
+          <path
+            d={path}
+            fill="none"
+            stroke="#8A93A8"
+            strokeOpacity="0.2"
+            strokeWidth="1.4"
+          />
           <path
             d={path}
             fill="none"
@@ -259,7 +276,13 @@ function AdaptiveBranches() {
           animation: "ring-out 2.6s ease-out infinite",
         }}
       />
-      <circle cx="80" cy="100" r="18" fill="url(#adpt-halo)" style={{ animation: "dot-pulse 2.4s ease-in-out infinite" }} />
+      <circle
+        cx="80"
+        cy="100"
+        r="18"
+        fill="url(#adpt-halo)"
+        style={{ animation: "dot-pulse 2.4s ease-in-out infinite" }}
+      />
       <circle cx="80" cy="100" r="4" fill={BRAND} filter="url(#adpt-glow)" />
 
       {/* Conclusions, lighting up as each inference lands */}
@@ -298,17 +321,43 @@ const MESH_NODES: [number, number, boolean][] = [
 ];
 
 const MESH_EDGES: [number, number][] = [
-  [0, 1], [1, 2], [2, 3], [0, 4], [1, 4], [1, 5], [2, 5], [2, 6],
-  [3, 6], [3, 7], [4, 5], [5, 6], [6, 7], [4, 8], [5, 8], [8, 9],
-  [6, 9], [9, 7], [0, 8],
+  [0, 1],
+  [1, 2],
+  [2, 3],
+  [0, 4],
+  [1, 4],
+  [1, 5],
+  [2, 5],
+  [2, 6],
+  [3, 6],
+  [3, 7],
+  [4, 5],
+  [5, 6],
+  [6, 7],
+  [4, 8],
+  [5, 8],
+  [8, 9],
+  [6, 9],
+  [9, 7],
+  [0, 8],
 ];
 
 /** The order the shared signal walks the mesh — every node, once. */
 const TRAVERSAL = [0, 1, 2, 3, 7, 6, 5, 4, 8, 9];
 
 const STARS: [number, number][] = [
-  [40, 40], [120, 30], [210, 26], [300, 34], [390, 44], [70, 90],
-  [400, 150], [30, 150], [180, 185], [350, 185], [260, 90], [150, 95],
+  [40, 40],
+  [120, 30],
+  [210, 26],
+  [300, 34],
+  [390, 44],
+  [70, 90],
+  [400, 150],
+  [30, 150],
+  [180, 185],
+  [350, 185],
+  [260, 90],
+  [150, 95],
 ];
 
 const HOP_SECONDS = 2.2;

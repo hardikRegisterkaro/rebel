@@ -13,12 +13,15 @@ export function ServiceOfferings({ offerings }: { offerings: Offering[] }) {
     >
       <div className="mx-auto max-w-(--spacing-shell) px-6 py-[clamp(68px,10vh,116px)] sm:px-7">
         <div
-          data-reveal
+          data-reveal="fade-right"
           className="mb-[clamp(36px,5vh,56px)] flex flex-wrap items-end justify-between gap-5.5"
         >
           <div>
             <p className="mb-4 inline-flex items-center gap-2.5 font-mono text-[0.68rem] tracking-[0.22em] text-brand uppercase">
-              <span aria-hidden="true" className="inline-block size-[7px] bg-brand" />
+              <span
+                aria-hidden="true"
+                className="inline-block size-[7px] bg-brand"
+              />
               What We Do
             </p>
             <h2
@@ -35,7 +38,11 @@ export function ServiceOfferings({ offerings }: { offerings: Offering[] }) {
           </p>
         </div>
 
-        <ul data-reveal className="grid grid-cols-1 gap-5 md:grid-cols-2">
+        <ul
+          data-reveal="fade-up"
+          data-reveal-delay="1"
+          className="grid grid-cols-1 gap-5 md:grid-cols-2"
+        >
           {offerings.map((offering, index) => (
             <li key={offering.title} className="min-w-0">
               <Link
