@@ -6,6 +6,7 @@ import { PipelineSection } from "@/components/careers/pipeline-section";
 import { RoleBoard } from "@/components/careers/role-board";
 import { WhyBuildHere } from "@/components/careers/why-build-here";
 import { faqPageJsonLd, jsonLd } from "@/lib/json-ld";
+import { OG_DEFAULTS, TWITTER_DEFAULTS } from "@/lib/seo";
 import { CANDIDATE_FAQS, CAREERS } from "@/lib/careers";
 
 const description = CAREERS.hero.lede;
@@ -14,7 +15,10 @@ export const metadata: Metadata = {
   title: "Careers",
   description,
   alternates: { canonical: "/careers" },
+  twitter: TWITTER_DEFAULTS,
   openGraph: {
+    ...OG_DEFAULTS,
+    url: "/careers",
     title: "Careers · Rebel Labz",
     description,
   },

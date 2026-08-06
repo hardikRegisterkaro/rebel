@@ -6,13 +6,17 @@ import { ServiceContact } from "@/components/service/service-contact";
 import { ServiceHero } from "@/components/service/service-hero";
 import { ServiceOfferings } from "@/components/service/service-offerings";
 import { faqPageJsonLd, jsonLd } from "@/lib/json-ld";
+import { OG_DEFAULTS, TWITTER_DEFAULTS } from "@/lib/seo";
 import { DECISION_INTELLIGENCE as solution } from "@/lib/solutions";
 
 export const metadata: Metadata = {
   title: solution.title,
   description: solution.tagline,
   alternates: { canonical: `/solutions/${solution.slug}` },
+  twitter: TWITTER_DEFAULTS,
   openGraph: {
+    ...OG_DEFAULTS,
+    url: "/solutions/decision-intelligence",
     title: `${solution.title} · Rebel Labz`,
     description: solution.tagline,
     images: [{ url: solution.hero.image }],

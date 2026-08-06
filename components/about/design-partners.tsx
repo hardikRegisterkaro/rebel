@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { CollaborateModal } from "@/components/about/collaborate-modal";
 
 import { ABOUT, PARTNER_OFFERS } from "@/lib/about";
 
@@ -73,18 +73,11 @@ export function DesignPartners() {
               {ABOUT.partners.cohort.body}
             </p>
           </div>
-          <Link
-            href={ABOUT.partners.cohort.cta.href}
-            className="group inline-flex flex-none items-center gap-2.5 rounded-full bg-brand px-6.5 py-3.5 text-[0.9rem] font-semibold text-white transition-[transform,box-shadow] duration-300 ease-(--ease-out-soft) hover:-translate-y-0.5 hover:shadow-[0_16px_34px_-14px_rgb(255_51_51/0.75)]"
-          >
-            {ABOUT.partners.cohort.cta.label}
-            <span
-              aria-hidden="true"
-              className="transition-transform duration-300 group-hover:translate-x-1"
-            >
-              →
-            </span>
-          </Link>
+          <CollaborateModal
+            label={ABOUT.partners.cohort.cta.label}
+            context="Design partner application"
+            className="group inline-flex flex-none cursor-pointer items-center gap-2.5 rounded-full bg-brand px-6.5 py-3.5 text-[0.9rem] font-semibold text-white transition-[transform,box-shadow] duration-300 ease-(--ease-out-soft) hover:-translate-y-0.5 hover:shadow-[0_16px_34px_-14px_rgb(255_51_51/0.75)]"
+          />
         </div>
       </div>
     </section>

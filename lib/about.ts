@@ -186,13 +186,45 @@ export const ABOUT_FAQS: AboutFaq[] = [
   {
     question: "How global is the lab?",
     answer:
-      "Remote-first by design — nine people working from wherever the problem is, with current pilots running across Europe and the Gulf.",
+      "Remote-first by design — nine people working from wherever the problem is, with the core team in India and pilots running across timezones.",
   },
 ];
 
+/**
+ * Founding year, and the lab's age in words.
+ *
+ * The About page leans on being new, so the one string that states the age is
+ * computed rather than typed — a hardcoded "Year One" silently becomes wrong
+ * every January. Every other age reference on the page is deliberately worded
+ * to never need updating ("early", "young on purpose"), so this is the only
+ * thing that can drift.
+ *
+ * Resolved at build time: the About page is statically prerendered, so it
+ * corrects itself on each deploy rather than at midnight. Only imported by
+ * server components, so there is no hydration mismatch to worry about.
+ */
+export const FOUNDED_YEAR = 2025;
+
+const ORDINALS = [
+  "One",
+  "Two",
+  "Three",
+  "Four",
+  "Five",
+  "Six",
+  "Seven",
+  "Eight",
+  "Nine",
+  "Ten",
+];
+
+const yearIndex = Math.max(1, new Date().getFullYear() - FOUNDED_YEAR + 1);
+/** "Two" in 2026, "Three" in 2027 — falls back to the numeral past ten. */
+const YEAR_WORD = ORDINALS[yearIndex - 1] ?? String(yearIndex);
+
 export const ABOUT = {
   hero: {
-    badge: "Founded 2025 · Year One",
+    badge: `Founded ${FOUNDED_YEAR} · Year ${YEAR_WORD}`,
     title: "A new lab, built on an old idea",
     lede: "Rebel Labz is young on purpose. No legacy stack to defend, no decade of consulting habits to unlearn — just a small team building adaptive intelligence the way we believe it should have been built from the start.",
     primaryCta: { label: "See where we are", href: "#story" },
@@ -200,14 +232,14 @@ export const ABOUT = {
     /** Corner captions on the orbital canvas. */
     canvas: {
       badge: "One Lab · Four Pillars",
-      year: "Year one · in motion",
+      year: `Year ${YEAR_WORD.toLowerCase()} · in motion`,
       hint: "move cursor · orbits bend",
       click: "click · pulse",
     },
   },
   story: {
     eyebrow: "Where We Are",
-    heading: "An honest map of year one",
+    heading: "An honest map of where we are",
     lede: "Most labs open with a decade of logos. We would rather show you exactly where we are, what is already running, and what we are building next.",
   },
   values: {
@@ -227,11 +259,13 @@ export const ABOUT = {
     eyebrow: "Design Partners",
     heading: "We would rather earn it than claim it",
     aside:
-      "No logo wall yet — we are one year old and our early partners are still under NDA. Here is what we offer instead.",
+      "No logo wall yet — we are early and our partners are still under NDA. Here is what we offer instead.",
     cohort: {
       eyebrow: "Cohort Two · Now Open",
       body: "We take on a handful of design partners at a time, so the lab stays closer to the work than to the pipeline.",
-      cta: { label: "Apply as a design partner", href: "/contact" },
+      // Opens the collaborate modal rather than navigating — see
+      // components/about/collaborate-modal.tsx. No href by design.
+      cta: { label: "Apply as a design partner" },
     },
   },
   faq: {
@@ -243,7 +277,8 @@ export const ABOUT = {
       eyebrow: "For Clients & Partners",
       heading: "Bring us a real problem",
       body: "We scope fast, ship a working pilot in weeks, and measure success against your outcome — not our hours.",
-      cta: { label: "Partner With Us", href: "/contact" },
+      // Opens the collaborate modal rather than navigating.
+      cta: { label: "Partner With Us" },
     },
     careers: {
       eyebrow: "For Careers & Talent",

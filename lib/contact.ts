@@ -107,19 +107,27 @@ export const CONTACT = {
     note: "Reply < 48h",
   },
   rail: {
-    /** Proof points on the dark card beside the form. */
-    eyebrow: "Why partners write to us",
+    /**
+     * Proof points beside the form.
+     *
+     * Every figure here must already be stated on /about or the solution page —
+     * a one-year-old lab that claims volume or uptime on its contact page and
+     * honesty on its about page contradicts itself in front of the prospect.
+     * Track-record numbers ("systems shipped") and SLA-grade numbers ("audited
+     * uptime") do not belong here until they are true and measured.
+     */
+    eyebrow: "What you get from us",
     stats: [
-      { value: "140+", label: "Systems shipped" },
-      { value: "−94%", label: "Compute cost" },
-      { value: "99.99%", label: "Audited uptime" },
+      { value: "6", label: "Design partners" },
+      { value: "4–6 wks", label: "To a working pilot" },
+      { value: "100%", label: "Decisions auditable" },
     ] satisfies Stat[],
     location: {
       caption: "Remote-first · No head office",
       title: "Where the lab works",
-      body: "Distributed across Europe, North America, and the Gulf — we meet where your problem is.",
+      body: "Remote-first out of India, working across timezones — we meet where your problem is.",
       rows: [
-        { label: "Desk hours", value: "Mon–Fri · 09:00–18:00 CET" },
+        { label: "Desk hours", value: "Mon–Fri · 09:00–18:00 IST" },
         { label: "First reply", value: "Within 48 hours", accent: true },
       ],
     },

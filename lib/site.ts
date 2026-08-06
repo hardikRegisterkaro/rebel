@@ -22,6 +22,8 @@ export const SITEMAP_ROUTES: { path: string; priority: number }[] = [
   { path: "/about", priority: 0.8 },
   { path: "/careers", priority: 0.8 },
   { path: "/contact", priority: 0.7 },
+  { path: "/privacy", priority: 0.3 },
+  { path: "/terms", priority: 0.3 },
   // Role pages are derived so a new opening is listed the moment it is added
   // to ROLES — there is no second place to remember to update.
   ...ROLES.map((role) => ({ path: `/careers/${role.slug}`, priority: 0.6 })),

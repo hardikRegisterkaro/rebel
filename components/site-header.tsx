@@ -88,8 +88,8 @@ export function SiteHeader() {
           <Image
             src="/brand/logo.svg"
             alt="Rebel Labz"
-            width={383}
-            height={62}
+            width={748}
+            height={173}
             priority
             className="h-7 w-auto lg:h-[31px]"
           />

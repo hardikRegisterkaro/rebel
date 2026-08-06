@@ -4,6 +4,7 @@ import { JetBrains_Mono } from "next/font/google";
 import { RevealObserver } from "@/components/reveal-observer";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { jsonLd, organizationJsonLd, websiteJsonLd } from "@/lib/json-ld";
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
@@ -56,6 +57,15 @@ export default function RebelLayout({
       >
         Skip to content
       </a>
+
+      {/* Site-wide identity: ties the domain, logo, contact details and
+          LinkedIn profile to one entity instead of leaving it to be inferred. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd([organizationJsonLd(), websiteJsonLd()]),
+        }}
+      />
 
       <SiteHeader />
 

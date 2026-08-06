@@ -11,8 +11,8 @@ export function SiteFooter() {
           <Image
             src="/brand/logo.svg"
             alt={SITE.name}
-            width={383}
-            height={62}
+            width={748}
+            height={173}
             loading="lazy"
             className="h-[30px] w-auto self-start"
           />
@@ -68,10 +68,30 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-(--spacing-shell) items-center justify-between gap-4 px-6 py-4.5 font-mono text-[0.6rem] tracking-[0.15em] text-dark-faint-2 uppercase sm:px-7">
+        <div className="mx-auto flex max-w-(--spacing-shell) flex-wrap items-center justify-between gap-x-6 gap-y-3 px-6 py-4.5 font-mono text-[0.6rem] tracking-[0.15em] text-dark-faint-2 uppercase sm:px-7">
           <span>
             © {new Date().getFullYear()} {SITE.name}. All rights reserved.
           </span>
+
+          {/* Legal links live here rather than in a nav group: a privacy
+              policy has to be reachable from every page to do its job. */}
+          <nav aria-label="Legal" className="flex items-center gap-5">
+            <Link
+              href="/privacy"
+              prefetch={false}
+              className="transition-colors hover:text-brand"
+            >
+              Privacy
+            </Link>
+            <Link
+              href="/terms"
+              prefetch={false}
+              className="transition-colors hover:text-brand"
+            >
+              Terms
+            </Link>
+          </nav>
+
           <span className="inline-flex items-center gap-2">
             <span
               aria-hidden="true"

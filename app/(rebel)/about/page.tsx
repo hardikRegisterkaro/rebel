@@ -11,6 +11,7 @@ import { OperationalStandards } from "@/components/about/operational-standards";
 import { WhereWeAre } from "@/components/about/where-we-are";
 import { OpenLab } from "@/components/open-lab";
 import { faqPageJsonLd, jsonLd } from "@/lib/json-ld";
+import { OG_DEFAULTS, TWITTER_DEFAULTS } from "@/lib/seo";
 import { ABOUT, ABOUT_FAQS } from "@/lib/about";
 
 const description = ABOUT.hero.lede;
@@ -19,7 +20,10 @@ export const metadata: Metadata = {
   title: "About Us",
   description,
   alternates: { canonical: "/about" },
+  twitter: TWITTER_DEFAULTS,
   openGraph: {
+    ...OG_DEFAULTS,
+    url: "/about",
     title: "About Us · Rebel Labz",
     description,
   },

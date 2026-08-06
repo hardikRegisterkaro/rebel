@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ApplyForm } from "@/components/careers/apply-form";
 import { JobDetail } from "@/components/careers/job-detail";
 import { ROLES, roleBySlug } from "@/lib/careers";
+import { OG_DEFAULTS, TWITTER_DEFAULTS } from "@/lib/seo";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -23,7 +24,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     title: role.title,
     description,
     alternates: { canonical: `/careers/${role.slug}` },
-    openGraph: { title: `${role.title} · Rebel Labz`, description },
+    twitter: TWITTER_DEFAULTS,
+    openGraph: {
+      ...OG_DEFAULTS,
+      url: `/careers/${role.slug}`,
+      title: `${role.title} · Rebel Labz`,
+      description,
+    },
   };
 }
 

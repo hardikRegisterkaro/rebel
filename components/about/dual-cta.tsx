@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { CollaborateModal } from "@/components/about/collaborate-modal";
+
 import { ABOUT } from "@/lib/about";
 import { ROLES } from "@/lib/careers";
 
@@ -32,18 +34,11 @@ export function DualCta() {
             <p className="text-[0.9rem] leading-[1.55] text-[#a8a8a8]">
               {partners.body}
             </p>
-            <Link
-              href={partners.cta.href}
-              className={`${PILL} group bg-white text-ink hover:bg-[#e4e4e4]`}
-            >
-              {partners.cta.label}
-              <span
-                aria-hidden="true"
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              >
-                →
-              </span>
-            </Link>
+            <CollaborateModal
+              label={partners.cta.label}
+              context="Partner with the lab"
+              className={`${PILL} group cursor-pointer bg-white text-ink hover:bg-[#e4e4e4]`}
+            />
           </div>
 
           <div className={`${PANEL} bg-brand text-white`}>
