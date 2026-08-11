@@ -4,19 +4,24 @@ import { notFound } from "next/navigation";
 
 import { ApplyForm } from "@/components/careers/apply-form";
 import { JobDetail } from "@/components/careers/job-detail";
-import { ROLES, roleBySlug } from "@/lib/careers";
+import { getRole, getRoles } from "@/lib/careers-api";
 import { OG_DEFAULTS, TWITTER_DEFAULTS } from "@/lib/seo";
 
 type Params = { params: Promise<{ slug: string }> };
 
-/** Every role is known at build time, so all eight prerender as static pages. */
-export function generateStaticParams() {
-  return ROLES.map((role) => ({ slug: role.slug }));
+/**
+ * Prerender the roles that exist at build time. Roles published in the CMS
+ * afterwards are rendered on first request and then cached, so a new opening
+ * is live without a redeploy.
+ */
+export async function generateStaticParams() {
+  const roles = await getRoles();
+  return roles.map((role) => ({ slug: role.slug }));
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const role = roleBySlug(slug);
+  const role = await getRole(slug);
   if (!role) return {};
 
   const description = role.summary;
@@ -36,7 +41,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function RolePage({ params }: Params) {
   const { slug } = await params;
-  const role = roleBySlug(slug);
+  const role = await getRole(slug);
   if (!role) notFound();
 
   return (

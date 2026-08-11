@@ -1,5 +1,3 @@
-import { ROLES } from "@/lib/careers";
-
 /**
  * Canonical origin, shared by `metadataBase`, robots, and the sitemap so the
  * three can never disagree. Override per environment with NEXT_PUBLIC_SITE_URL
@@ -24,7 +22,10 @@ export const SITEMAP_ROUTES: { path: string; priority: number }[] = [
   { path: "/contact", priority: 0.7 },
   { path: "/privacy", priority: 0.3 },
   { path: "/terms", priority: 0.3 },
-  // Role pages are derived so a new opening is listed the moment it is added
-  // to ROLES — there is no second place to remember to update.
-  ...ROLES.map((role) => ({ path: `/careers/${role.slug}`, priority: 0.6 })),
+  // Role pages are NOT listed here — they come from the CMS and are appended
+  // by app/sitemap.ts at request time, so a newly published opening is listed
+  // without a redeploy.
 ];
+
+/** Priority applied to each CMS-sourced role page in the sitemap. */
+export const ROLE_SITEMAP_PRIORITY = 0.6;

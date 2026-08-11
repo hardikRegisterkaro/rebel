@@ -3,6 +3,19 @@ import type { NextConfig } from "next";
 const isDev = process.env.NODE_ENV === "development";
 
 /**
+ * Origin of the CMS the careers board fetches from, normalised to scheme+host
+ * because CSP source expressions take no path.
+ */
+const cmsOrigin = (() => {
+  const raw = process.env.NEXT_PUBLIC_CMS_API_URL ?? "http://localhost:3000";
+  try {
+    return new URL(raw).origin;
+  } catch {
+    return "";
+  }
+})();
+
+/**
  * Content Security Policy.
  *
  * `'unsafe-inline'` on script-src is a deliberate tradeoff: Next injects an
@@ -22,7 +35,10 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self'",
-  `connect-src 'self'${isDev ? " ws: wss:" : ""}`,
+  // The careers board pages through the CMS API from the browser, so the CMS
+  // origin has to be allowed here — `'self'` alone silently blocks every
+  // pagination and discipline-filter request.
+  `connect-src 'self' ${cmsOrigin}${isDev ? " ws: wss:" : ""}`.trim(),
   // Forms compose a mailto: rather than posting anywhere, so the scheme has to
   // be allowed for the no-JS fallback on the Open Lab form to work.
   "form-action 'self' mailto:",
