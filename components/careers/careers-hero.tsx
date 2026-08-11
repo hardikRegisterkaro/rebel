@@ -1,9 +1,15 @@
 import Link from "next/link";
 import { SmartLink } from "@/components/smart-link";
 
-import { CAREERS, ROLES } from "@/lib/careers";
+import type { CareersContent } from "@/lib/careers-api";
 
-export function CareersHero() {
+type Props = {
+  hero: CareersContent["hero"];
+  /** Published role count, shown in the badge. Counted, never authored. */
+  roleCount: number;
+};
+
+export function CareersHero({ hero, roleCount }: Props) {
   return (
     <section
       id="top"
@@ -50,7 +56,7 @@ export function CareersHero() {
               aria-hidden="true"
               className="inline-block size-1.5 animate-(--animate-soft-pulse) rounded-full bg-brand"
             />
-            {ROLES.length} open roles · hiring now
+            {roleCount} open roles · hiring now
           </p>
 
           <h1
@@ -59,8 +65,8 @@ export function CareersHero() {
             data-reveal-delay="2"
             className="text-[clamp(2.4rem,5.4vw,4.2rem)] leading-[1.02] font-semibold tracking-[-0.03em] text-pretty"
           >
-            {CAREERS.hero.title}{" "}
-            <span className="text-brand">{CAREERS.hero.titleAccent}</span>.
+            {hero.title}{" "}
+            <span className="text-brand">{hero.titleAccent}</span>.
           </h1>
 
           <p
@@ -68,15 +74,15 @@ export function CareersHero() {
             data-reveal-delay="3"
             className="mt-6 max-w-[52ch] text-[1.125rem] leading-[1.65] text-[#a8a8a8] text-pretty"
           >
-            {CAREERS.hero.lede}
+            {hero.lede}
           </p>
 
           <div data-reveal="fade-up" data-reveal-delay="4" className="mt-9">
             <SmartLink
-              href={CAREERS.hero.cta.href}
+              href={hero.cta.href}
               className="group inline-flex items-center gap-2.5 rounded-full bg-brand px-6.5 py-3.5 text-[0.9rem] font-semibold text-white transition-[transform,box-shadow] duration-300 ease-(--ease-out-soft) hover:-translate-y-0.5 hover:shadow-[0_16px_34px_-14px_rgb(255_51_51/0.75)]"
             >
-              {CAREERS.hero.cta.label}
+              {hero.cta.label}
               <span
                 aria-hidden="true"
                 className="transition-transform duration-300 group-hover:translate-x-1"

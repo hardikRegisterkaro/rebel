@@ -1,6 +1,9 @@
-import { CAREERS, PERKS } from "@/lib/careers";
+import type { CareersContent } from "@/lib/careers-api";
 
-export function WhyBuildHere() {
+export function WhyBuildHere({ perks }: { perks: CareersContent["perks"] }) {
+  // An editor who removes every card removes the section.
+  if (perks.items.length === 0) return null;
+
   return (
     <section
       aria-labelledby="perks-heading"
@@ -17,18 +20,18 @@ export function WhyBuildHere() {
                 aria-hidden="true"
                 className="inline-block size-[7px] bg-brand"
               />
-              {CAREERS.perks.eyebrow}
+              {perks.eyebrow}
             </p>
             <h2
               id="perks-heading"
               className="max-w-[18ch] text-[clamp(1.9rem,4vw,3rem)] leading-[1.05] font-semibold tracking-[-0.02em]"
             >
-              {CAREERS.perks.heading}
+              {perks.heading}
               <span className="text-brand">.</span>
             </h2>
           </div>
           <p className="m-0 max-w-[36ch] text-[0.94rem] leading-relaxed text-[#a8a8a8]">
-            {CAREERS.perks.aside}
+            {perks.aside}
           </p>
         </div>
 
@@ -37,7 +40,7 @@ export function WhyBuildHere() {
           data-reveal-delay="1"
           className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {PERKS.map((perk) => (
+          {perks.items.map((perk) => (
             <li
               key={perk.title}
               className="flex flex-col gap-3 rounded-[18px] border border-white/[0.10] bg-ink-800 px-6 py-6.5 transition-[transform,border-color] duration-350 ease-(--ease-out-soft) hover:-translate-y-1 hover:border-white/[0.22]"

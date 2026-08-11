@@ -7,8 +7,8 @@ import { RoleBoard } from "@/components/careers/role-board";
 import { WhyBuildHere } from "@/components/careers/why-build-here";
 import { faqPageJsonLd, jsonLd } from "@/lib/json-ld";
 import { OG_DEFAULTS, TWITTER_DEFAULTS } from "@/lib/seo";
-import { CANDIDATE_FAQS, CAREERS } from "@/lib/careers";
-import { getRolesPage, getDisciplines } from "@/lib/careers-api";
+import { CAREERS } from "@/lib/careers";
+import { getRolesPage, getDisciplines, getCareersContent } from "@/lib/careers-api";
 
 const description = CAREERS.hero.lede;
 
@@ -25,8 +25,6 @@ export const metadata: Metadata = {
   },
 };
 
-const faqJsonLd = faqPageJsonLd(CANDIDATE_FAQS);
-
 type Props = {
   searchParams: Promise<{ discipline?: string; page?: string }>;
 };
@@ -40,9 +38,12 @@ export default async function CareersPage({ searchParams }: Props) {
   const { discipline = "", page: pageParam } = await searchParams;
   const page = Math.max(1, Number(pageParam) || 1);
 
-  const [{ roles, total }, disciplines] = await Promise.all([
+  // Roles, discipline tabs and the page copy are independent reads — fetched
+  // together so the page waits on the slowest, not the sum.
+  const [{ roles, total }, disciplines, content] = await Promise.all([
     getRolesPage({ page, discipline }),
     getDisciplines(),
+    getCareersContent(),
   ]);
   const filters = disciplines.length ? ["All Roles", ...disciplines] : undefined;
 
@@ -51,20 +52,23 @@ export default async function CareersPage({ searchParams }: Props) {
       <script
         type="application/ld+json"
         // Content is authored in lib/careers.ts, not user input.
-        dangerouslySetInnerHTML={{ __html: jsonLd(faqJsonLd) }}
+        // Built from the CMS copy so the structured data always matches the
+        // questions actually rendered below.
+        dangerouslySetInnerHTML={{ __html: jsonLd(faqPageJsonLd(content.faq.items)) }}
       />
 
-      <CareersHero />
+      <CareersHero hero={content.hero} roleCount={total} />
       <RoleBoard
+        header={content.roles}
         roles={roles}
         total={total}
         page={page}
         discipline={discipline}
         filters={filters}
       />
-      <WhyBuildHere />
-      <CandidateFaq />
-      <PipelineSection />
+      <WhyBuildHere perks={content.perks} />
+      <CandidateFaq faq={content.faq} />
+      <PipelineSection pipeline={content.pipeline} />
     </>
   );
 }

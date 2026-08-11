@@ -1,7 +1,7 @@
 import { PipelineForm } from "@/components/careers/pipeline-form";
-import { CAREERS } from "@/lib/careers";
+import type { CareersContent } from "@/lib/careers-api";
 
-export function PipelineSection() {
+export function PipelineSection({ pipeline }: { pipeline: CareersContent["pipeline"] }) {
   return (
     <section
       id="pipeline"
@@ -15,18 +15,18 @@ export function PipelineSection() {
               aria-hidden="true"
               className="inline-block size-[7px] bg-brand"
             />
-            {CAREERS.pipeline.eyebrow}
+            {pipeline.eyebrow}
           </p>
           <h2
             id="pipeline-heading"
             className="max-w-[14ch] text-[clamp(1.9rem,4vw,3rem)] leading-[1.05] font-semibold tracking-[-0.02em]"
           >
-            {CAREERS.pipeline.heading}
+            {pipeline.heading}
             <span className="text-brand">?</span>
           </h2>
 
           <ul className="mt-6.5 flex flex-col gap-3.5">
-            {CAREERS.pipeline.bullets.map((bullet) => (
+            {pipeline.bullets.map((bullet) => (
               <li key={bullet} className="flex items-start gap-3">
                 <span
                   aria-hidden="true"
