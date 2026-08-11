@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-import { CONTACT } from "@/lib/contact";
+import type { ContactContent } from "@/lib/careers-api";
 
-export function ContactHero() {
+export function ContactHero({ hero }: { hero: ContactContent["hero"] }) {
   return (
     <section
       id="top"
@@ -49,7 +49,7 @@ export function ContactHero() {
               aria-hidden="true"
               className="inline-block size-1.5 animate-(--animate-soft-pulse) rounded-full bg-brand"
             />
-            {CONTACT.hero.badge}
+            {hero.badge}
           </p>
 
           <h1
@@ -58,8 +58,8 @@ export function ContactHero() {
             data-reveal-delay="2"
             className="text-[clamp(2.4rem,5.4vw,4.2rem)] leading-[1.02] font-semibold tracking-[-0.03em] text-balance"
           >
-            {CONTACT.hero.title}{" "}
-            <span className="text-brand">{CONTACT.hero.titleAccent}</span>.
+            {hero.title}{" "}
+            <span className="text-brand">{hero.titleAccent}</span>.
           </h1>
 
           <p
@@ -67,7 +67,7 @@ export function ContactHero() {
             data-reveal-delay="3"
             className="mt-6 max-w-[52ch] text-[1.125rem] leading-[1.65] text-[#a8a8a8] text-pretty"
           >
-            {CONTACT.hero.lede}
+            {hero.lede}
           </p>
 
           <dl
@@ -75,7 +75,7 @@ export function ContactHero() {
             data-reveal-delay="4"
             className="mt-13 grid w-full grid-cols-3 border-t border-white/10"
           >
-            {CONTACT.hero.stats.map((stat, index) => (
+            {hero.stats.map((stat, index) => (
               <div
                 key={stat.label}
                 className={`flex flex-col items-center gap-1.75 px-1.5 pt-6.5 sm:px-3 ${

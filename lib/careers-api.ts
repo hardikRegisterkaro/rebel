@@ -11,6 +11,8 @@
  */
 import type { CandidateFaq, Perk, Role } from "@/lib/careers";
 import { CANDIDATE_FAQS, CAREERS, PERKS } from "@/lib/careers";
+import { CONTACT, CONTACT_FAQS, STEPS } from "@/lib/contact";
+import { SITE } from "@/lib/content";
 
 /**
  * Where the CMS lives. Falls back to the local dev CMS so `npm run dev` works
@@ -19,12 +21,15 @@ import { CANDIDATE_FAQS, CAREERS, PERKS } from "@/lib/careers";
 const CMS_URL = (process.env.CMS_API_URL ?? "http://localhost:3000").replace(/\/$/, "");
 
 /**
- * How long a cached roles response is served before Next refetches.
+ * How long a cached CMS response is served before Next refetches.
  *
- * The CMS also pushes tag-based revalidation on publish, so this is the
- * backstop for a missed webhook rather than the primary freshness mechanism.
+ * Deliberately long. Publishing in the CMS calls /api/revalidate, which expires
+ * the matching tags immediately, so this window is the backstop for a missed
+ * webhook — not the freshness mechanism. Keeping it short would mean visitors
+ * repeatedly waking a remote database for content that changes a few times a
+ * month.
  */
-const REVALIDATE_SECONDS = 300;
+const REVALIDATE_SECONDS = 3600;
 
 /*
  * Cache tags MUST match careerTags() in the CMS ("career-list",
@@ -90,6 +95,67 @@ async function getJson<T>(path: string, tag: string): Promise<T | null> {
   }
 }
 
+/* ── Contact page ───────────────────────────────────────────────────────── */
+
+export type ContactStat = { value: string; label: string };
+export type ContactRow = { label: string; value: string };
+export type ContactStep = { ident: string; title: string; body: string };
+export type ContactFaqItem = { question: string; answer: string };
+
+/** Contact page copy. Mirrors ContactPageContent in the CMS. */
+export type ContactContent = {
+  hero: { badge: string; title: string; titleAccent: string; lede: string; stats: ContactStat[] };
+  rail: {
+    reach: {
+      heading: string;
+      email: string;
+      phone: string;
+      phoneHref: string;
+      linkedin: string;
+      linkedinHref: string;
+    };
+    join: { heading: string; href: string };
+    eyebrow: string;
+    stats: ContactStat[];
+    location: { caption: string; title: string; body: string; rows: ContactRow[] };
+  };
+  steps: { eyebrow: string; heading: string; aside: string; items: ContactStep[] };
+  faq: { eyebrow: string; heading: string; aside: string; items: ContactFaqItem[] };
+};
+
+/**
+ * Same deploy-skew guard as the careers copy: a CMS still serving the previous
+ * shape would otherwise crash the page on a missing array.
+ */
+function isContactContent(value: unknown): value is ContactContent {
+  const c = value as ContactContent | undefined;
+  return Boolean(
+    c &&
+      typeof c.hero?.title === "string" &&
+      Array.isArray(c.hero?.stats) &&
+      typeof c.rail?.reach?.email === "string" &&
+      Array.isArray(c.rail?.stats) &&
+      Array.isArray(c.rail?.location?.rows) &&
+      Array.isArray(c.steps?.items) &&
+      Array.isArray(c.faq?.items)
+  );
+}
+
+/** Contact page copy from the CMS, falling back to the shipped text. */
+export async function getContactContent(): Promise<ContactContent> {
+  const data = await getJson<{ success: boolean; data: { content: unknown } | null }>(
+    "/api/contact",
+    "contact-page"
+  );
+  const content = data?.data?.content;
+  if (isContactContent(content)) return content;
+
+  if (content) {
+    console.error("[contact] CMS returned an unrecognised page-content shape — using shipped copy");
+  }
+  return CONTACT_FALLBACK;
+}
+
 /** Section header trio shared by the roles, perks and FAQ blocks. */
 type SectionHeader = { eyebrow: string; heading: string; aside: string };
 
@@ -142,6 +208,38 @@ function isCareersContent(value: unknown): value is CareersContent {
       Array.isArray(c.pipeline?.bullets)
   );
 }
+
+/** Contact copy shipped with the site, used when the CMS is unreachable. */
+const CONTACT_FALLBACK: ContactContent = {
+  hero: {
+    badge: CONTACT.hero.badge,
+    title: CONTACT.hero.title,
+    titleAccent: CONTACT.hero.titleAccent,
+    lede: CONTACT.hero.lede,
+    stats: [...CONTACT.hero.stats],
+  },
+  rail: {
+    reach: {
+      heading: "Reach the lab",
+      email: SITE.email,
+      phone: SITE.phone,
+      phoneHref: SITE.phoneHref,
+      linkedin: SITE.linkedin,
+      linkedinHref: SITE.linkedinHref,
+    },
+    join: { heading: "Join the lab", href: "/careers" },
+    eyebrow: CONTACT.rail.eyebrow,
+    stats: [...CONTACT.rail.stats],
+    location: {
+      caption: CONTACT.rail.location.caption,
+      title: CONTACT.rail.location.title,
+      body: CONTACT.rail.location.body,
+      rows: [...CONTACT.rail.location.rows],
+    },
+  },
+  steps: { ...CONTACT.steps, items: [...STEPS] },
+  faq: { ...CONTACT.faq, items: [...CONTACT_FAQS] },
+};
 
 /** Careers page copy from the CMS, falling back to the shipped text. */
 export async function getCareersContent(): Promise<CareersContent> {

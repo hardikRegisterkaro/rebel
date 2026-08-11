@@ -1,7 +1,14 @@
 import { ContactForm } from "@/components/contact/contact-form";
+import type { ContactContent } from "@/lib/careers-api";
 import { ContactRail } from "@/components/contact/contact-rail";
 
-export function CollaborationPanel() {
+export function CollaborationPanel({
+  rail,
+  roleCount,
+}: {
+  rail: ContactContent["rail"];
+  roleCount: number;
+}) {
   return (
     <section
       id="form"
@@ -10,7 +17,7 @@ export function CollaborationPanel() {
     >
       <div className="mx-auto grid grid-cols-1 max-w-(--spacing-shell) items-start gap-[clamp(28px,3vw,40px)] px-6 py-[clamp(64px,10vh,110px)] sm:px-7 lg:grid-cols-[1.18fr_0.82fr]">
         <ContactForm />
-        <ContactRail />
+        <ContactRail rail={rail} roleCount={roleCount} />
       </div>
     </section>
   );
