@@ -3,12 +3,8 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import {
-  CAREERS,
-  ROLES_PER_PAGE,
-  ROLE_FILTERS,
-  type Role,
-} from "@/lib/careers";
+import { ROLES_PER_PAGE, ROLE_FILTERS, type Role } from "@/lib/careers";
+import type { CareersContent } from "@/lib/careers-api";
 
 /**
  * How many discipline chips to show before collapsing the rest behind a
@@ -55,6 +51,8 @@ type Props = {
   roles: Role[];
   /** Total roles matching the active filter — drives the page count. */
   total?: number;
+  /** Section copy from the CMS — heading only; the listing is unaffected. */
+  header: CareersContent["roles"];
   /** Current 1-based page, from the URL. */
   page?: number;
   /** Active discipline, or "" for all — from the URL. */
@@ -75,6 +73,7 @@ type Props = {
  * which is fetched by the server component that renders this.
  */
 export function RoleBoard({
+  header,
   roles: initialRoles,
   total: initialTotal = initialRoles.length,
   page: initialPage = 1,
@@ -114,7 +113,11 @@ export function RoleBoard({
 
     setLoading(true);
     try {
-      const res = await fetch(`${CMS_URL}/api/careers/client?${params}`);
+      // Same reasoning as the server fetch: a CMS that never answers must not
+      // leave the board stuck on its skeleton forever.
+      const res = await fetch(`${CMS_URL}/api/careers/client?${params}`, {
+        signal: AbortSignal.timeout(8000),
+      });
       if (!res.ok || id !== requestId.current) return;
       const data = await res.json();
       if (id !== requestId.current) return;
@@ -191,18 +194,18 @@ export function RoleBoard({
                 aria-hidden="true"
                 className="inline-block size-[7px] bg-brand"
               />
-              {CAREERS.roles.eyebrow}
+              {header.eyebrow}
             </p>
             <h2
               id="roles-heading"
               className="max-w-[16ch] text-[clamp(1.9rem,4vw,3rem)] leading-[1.05] font-semibold tracking-[-0.02em]"
             >
-              {CAREERS.roles.heading}
+              {header.heading}
               <span className="text-brand">.</span>
             </h2>
           </div>
           <p className="m-0 max-w-[34ch] text-[0.94rem] leading-relaxed text-light-muted">
-            {CAREERS.roles.aside}
+            {header.aside}
           </p>
         </div>
 
@@ -256,6 +259,20 @@ export function RoleBoard({
         <div data-reveal="fade-up" data-reveal-delay="2">
         {loading ? (
           <RoleSkeleton count={roles.length || ROLES_PER_PAGE} />
+        ) : roles.length === 0 ? (
+          /* Reached when the discipline has no openings, and also when the CMS
+             is unreachable — better an honest message than a blank strip that
+             reads as a broken page. */
+          <div className="border border-black/[0.08] border-l-[3px] border-l-brand bg-paper px-6 py-12 text-center">
+            <p className="text-[1.02rem] font-semibold tracking-[-0.01em]">
+              No open roles here right now.
+            </p>
+            <p className="mt-2 text-[0.92rem] text-light-muted">
+              {filter === "All Roles"
+                ? "Nothing is posted at the moment — check back soon, or reach out anyway."
+                : `Nothing open in ${filter} today. Try another discipline.`}
+            </p>
+          </div>
         ) : (
         <ul className="flex flex-col">
           {roles.map((role) => (
