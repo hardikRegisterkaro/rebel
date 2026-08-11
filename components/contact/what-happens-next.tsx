@@ -1,6 +1,6 @@
-import { CONTACT, STEPS } from "@/lib/contact";
+import type { ContactContent } from "@/lib/careers-api";
 
-export function WhatHappensNext() {
+export function WhatHappensNext({ steps }: { steps: ContactContent["steps"] }) {
   return (
     <section
       aria-labelledby="steps-heading"
@@ -17,18 +17,18 @@ export function WhatHappensNext() {
                 aria-hidden="true"
                 className="inline-block size-[7px] bg-brand"
               />
-              {CONTACT.steps.eyebrow}
+              {steps.eyebrow}
             </p>
             <h2
               id="steps-heading"
               className="max-w-[18ch] text-[clamp(1.8rem,3.4vw,2.6rem)] leading-[1.06] font-semibold tracking-[-0.02em]"
             >
-              {CONTACT.steps.heading}
+              {steps.heading}
               <span className="text-brand">.</span>
             </h2>
           </div>
           <p className="m-0 max-w-[34ch] text-[0.94rem] leading-relaxed text-[#a8a8a8]">
-            {CONTACT.steps.aside}
+            {steps.aside}
           </p>
         </div>
 
@@ -39,7 +39,7 @@ export function WhatHappensNext() {
           data-reveal="zoom-in"
           className="grid grid-cols-1 gap-px overflow-hidden rounded-[20px] border border-white/[0.14] bg-white/[0.14] sm:grid-cols-2 lg:grid-cols-4"
         >
-          {STEPS.map((step) => (
+          {steps.items.map((step) => (
             <li
               key={step.ident}
               className="flex min-h-[190px] flex-col gap-3 bg-ink-800 px-6 py-7"

@@ -1,11 +1,13 @@
-import { CONTACT, CONTACT_FAQS } from "@/lib/contact";
+import type { ContactContent } from "@/lib/careers-api";
 
 /**
  * Same native <details>/<summary> approach as the other FAQ sections — the
  * design toggles these with JS, but the native element gets keyboard and
  * screen-reader behaviour for free and still opens with JS disabled.
  */
-export function ContactFaq() {
+export function ContactFaq({ faq }: { faq: ContactContent["faq"] }) {
+  if (faq.items.length === 0) return null;
+
   return (
     <section
       id="faq"
@@ -22,17 +24,17 @@ export function ContactFaq() {
               aria-hidden="true"
               className="inline-block size-[7px] bg-brand"
             />
-            {CONTACT.faq.eyebrow}
+            {faq.eyebrow}
           </p>
           <h2
             id="contact-faq-heading"
             className="text-[clamp(1.8rem,3.4vw,2.6rem)] leading-[1.06] font-semibold tracking-[-0.02em]"
           >
-            {CONTACT.faq.heading}
+            {faq.heading}
             <span className="text-brand">.</span>
           </h2>
           <p className="mt-4.5 max-w-[46ch] text-[0.94rem] leading-relaxed text-light-muted">
-            {CONTACT.faq.aside}
+            {faq.aside}
           </p>
         </div>
 
@@ -41,7 +43,7 @@ export function ContactFaq() {
           data-reveal-delay="1"
           className="flex flex-col gap-3"
         >
-          {CONTACT_FAQS.map((faq) => (
+          {faq.items.map((faq) => (
             <details
               key={faq.question}
               // `name` groups them into an exclusive accordion natively;
