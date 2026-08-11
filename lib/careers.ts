@@ -31,8 +31,19 @@ export type Role = {
    * content. Edit freely; the detail page renders whatever is here.
    */
   summary: string;
-  responsibilities: string[];
-  requirements: string[];
+  /**
+   * Full job description as HTML, authored in the CMS rich-text editor. When
+   * present it is the whole body of the role page; the two lists below are the
+   * fallback for roles created before this field existed.
+   */
+  description?: string | null;
+  responsibilities?: string[];
+  requirements?: string[];
+  /**
+   * "What we offer", authored per role in the CMS. Empty or absent hides the
+   * section rather than printing an empty heading.
+   */
+  perks?: Perk[];
 };
 
 /** Look up a role by its URL segment. */
