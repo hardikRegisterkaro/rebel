@@ -5,12 +5,31 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useState } from "react";
 
-import { HEADER_CTA, PRIMARY_NAV, type NavItem } from "@/lib/content";
+import {
+  HEADER_CTA,
+  PRIMARY_NAV,
+  type NavItem,
+  // Aliased: the local NavLink below is the pill in the top bar, not a link
+  // inside a dropdown.
+  type NavLink as NavLinkItem,
+} from "@/lib/content";
 
 /** Same-page anchors the header highlights while their section is on screen. */
 const SPY_SECTIONS = ["offerings", "openlab"] as const;
 
-export function SiteHeader() {
+/**
+ * The chrome is client-side (scroll spy, dropdowns, mobile sheet) but its
+ * content is CMS-authored, so the layout fetches on the server and hands it
+ * down. The defaults keep this component renderable on its own — and keep the
+ * header from disappearing if a caller forgets to pass anything.
+ */
+export function SiteHeader({
+  nav = PRIMARY_NAV,
+  cta = HEADER_CTA,
+}: {
+  nav?: NavItem[];
+  cta?: { label: string; href: string };
+} = {}) {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
@@ -72,10 +91,19 @@ export function SiteHeader() {
     };
   }, [mobileOpen]);
 
+  const onRoute = (href?: string) =>
+    Boolean(href) && href !== "/" && href !== "#" && pathname.startsWith(href!);
+
+  /** True when this link, or anything nested under it, is the current page —
+   *  a group has no route of its own, so it takes its highlight from whichever
+   *  descendant you are on. */
+  const covers = (link: NavLinkItem): boolean =>
+    onRoute(link.href) || (link.links ?? []).some(covers);
+
   const isCurrent = (item: NavItem) =>
     item.spy
       ? activeSection === item.spy
-      : item.href !== "/" && pathname.startsWith(item.href);
+      : onRoute(item.href) || (item.links ?? []).some(covers);
 
   return (
     <header className="sticky top-0 z-50 px-4">
@@ -100,7 +128,7 @@ export function SiteHeader() {
           aria-label="Primary"
           className="hidden flex-1 items-center justify-center gap-1 text-[0.8rem] font-medium lg:flex"
         >
-          {PRIMARY_NAV.map((item) =>
+          {nav.map((item) =>
             item.links ? (
               <div
                 key={item.label}
@@ -126,29 +154,7 @@ export function SiteHeader() {
                 <div className="invisible absolute top-full left-1/2 z-10 -translate-x-1/2 translate-y-2.5 pt-4 opacity-0 transition-[opacity,transform,visibility] duration-300 ease-(--ease-out-soft) group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
                   <div className="flex w-[300px] flex-col gap-0.5 rounded-2xl border border-white/10 bg-[#0e0e0e]/[0.97] p-2.5 shadow-[0_30px_70px_-20px_rgb(0_0_0/0.9)] backdrop-blur-xl">
                     {item.links.map((link) => (
-                      <Link
-                        key={link.label}
-                        href={link.href}
-                        prefetch={false}
-                        className="group/link flex items-center justify-between gap-3 rounded-[10px] px-3 py-2.5 transition-colors duration-200 hover:bg-white/5"
-                      >
-                        <span className="flex flex-col gap-0.5">
-                          <span className="text-[0.82rem] text-white/70 transition-colors duration-200 group-hover/link:text-white">
-                            {link.label}
-                          </span>
-                          {link.detail && (
-                            <span className="text-[0.7rem] text-white/35">
-                              {link.detail}
-                            </span>
-                          )}
-                        </span>
-                        <span
-                          aria-hidden="true"
-                          className="-translate-x-1 text-[0.7rem] text-brand opacity-0 transition-[opacity,transform] duration-200 group-hover/link:translate-x-0 group-hover/link:opacity-100"
-                        >
-                          →
-                        </span>
-                      </Link>
+                      <PanelEntry key={link.label} link={link} />
                     ))}
                   </div>
                 </div>
@@ -176,10 +182,10 @@ export function SiteHeader() {
           </p>
 
           <Link
-            href={HEADER_CTA.href}
+            href={cta.href}
             className="hidden flex-none rounded-xl bg-brand px-5 py-2.5 text-[0.8rem] font-semibold text-white transition-[transform,background-color,box-shadow] duration-300 ease-(--ease-out-soft) hover:-translate-y-0.5 hover:bg-brand-hover hover:shadow-[0_0_26px_-4px_rgb(255_51_51/0.75)] sm:block"
           >
-            {HEADER_CTA.label}
+            {cta.label}
           </Link>
 
           <button
@@ -212,7 +218,7 @@ export function SiteHeader() {
           className="mx-auto mt-2 max-h-[calc(100dvh-7rem)] w-full max-w-(--spacing-shell-nav) overflow-y-auto rounded-[18px] border border-white/10 bg-[#0e0e0e]/[0.98] p-5 shadow-[0_30px_70px_-20px_rgb(0_0_0/0.9)] backdrop-blur-xl lg:hidden"
         >
           <nav aria-label="Mobile" className="flex flex-col gap-6">
-            {PRIMARY_NAV.map((item) => (
+            {nav.map((item) => (
               <div key={item.label} className="flex flex-col gap-1">
                 {item.links ? (
                   <>
@@ -220,15 +226,11 @@ export function SiteHeader() {
                       {item.label}
                     </p>
                     {item.links.map((link) => (
-                      <Link
+                      <MobileEntry
                         key={link.label}
-                        href={link.href}
-                        prefetch={false}
-                        onClick={() => setMobileOpen(false)}
-                        className="rounded-lg py-2 text-sm text-white/70 transition-colors hover:text-white"
-                      >
-                        {link.label}
-                      </Link>
+                        link={link}
+                        onNavigate={() => setMobileOpen(false)}
+                      />
                     ))}
                   </>
                 ) : (
@@ -245,16 +247,128 @@ export function SiteHeader() {
             ))}
 
             <Link
-              href={HEADER_CTA.href}
+              href={cta.href}
               onClick={() => setMobileOpen(false)}
               className="rounded-xl bg-brand px-5 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-brand-hover"
             >
-              {HEADER_CTA.label}
+              {cta.label}
             </Link>
           </nav>
         </div>
       )}
     </header>
+  );
+}
+
+/**
+ * One entry inside the desktop dropdown, at any depth.
+ *
+ * A leaf is a row. A group is its label — as a caption, or as a row when it has
+ * a page of its own — with its children indented beneath it, drawn against a
+ * hairline so the nesting reads at a glance in a 300px panel. Recursion rather
+ * than a fixed two levels: the menu is CMS-authored, and an editor who nests
+ * three deep should see three levels, not a flattened list where a child sits
+ * beside its own parent.
+ */
+function PanelEntry({ link, depth = 0 }: { link: NavLinkItem; depth?: number }) {
+  const children = link.links ?? [];
+
+  if (children.length === 0) {
+    return link.href ? <PanelLink link={link} /> : null;
+  }
+
+  return (
+    <div className={depth > 0 ? "pt-1" : "pt-1 first:pt-0"}>
+      {link.href ? (
+        <PanelLink link={link} />
+      ) : (
+        <p className="px-3 pt-1.5 pb-1 font-mono text-[0.58rem] tracking-[0.18em] text-brand uppercase">
+          {link.label}
+        </p>
+      )}
+      <div className="ml-3 flex flex-col gap-0.5 border-l border-white/10 pl-1.5">
+        {children.map((child) => (
+          <PanelEntry key={child.label} link={child} depth={depth + 1} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * The same entry in the mobile sheet.
+ *
+ * The sheet has no hover, so nothing collapses — the tree is laid out open and
+ * indented, and every level is reachable by scrolling. Deeper labels step down
+ * in weight rather than size, which keeps a three-level branch legible without
+ * the type getting too small to tap accurately.
+ */
+function MobileEntry({
+  link,
+  onNavigate,
+  depth = 0,
+}: {
+  link: NavLinkItem;
+  onNavigate: () => void;
+  depth?: number;
+}) {
+  const children = link.links ?? [];
+
+  const label = link.href ? (
+    <Link
+      href={link.href}
+      prefetch={false}
+      onClick={onNavigate}
+      className="rounded-lg py-2 text-sm text-white/70 transition-colors hover:text-white"
+    >
+      {link.label}
+    </Link>
+  ) : (
+    <p className="py-2 text-sm text-white/45">{link.label}</p>
+  );
+
+  if (children.length === 0) return link.href ? label : null;
+
+  return (
+    <div className="flex flex-col">
+      {label}
+      <div className="ml-2 flex flex-col border-l border-white/10 pl-3">
+        {children.map((child) => (
+          <MobileEntry
+            key={child.label}
+            link={child}
+            onNavigate={onNavigate}
+            depth={depth + 1}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** A clickable row in the dropdown. */
+function PanelLink({ link }: { link: NavLinkItem }) {
+  return (
+    <Link
+      href={link.href ?? "#"}
+      prefetch={false}
+      className="group/link flex items-center justify-between gap-3 rounded-[10px] px-3 py-2.5 transition-colors duration-200 hover:bg-white/5"
+    >
+      <span className="flex flex-col gap-0.5">
+        <span className="text-[0.82rem] text-white/70 transition-colors duration-200 group-hover/link:text-white">
+          {link.label}
+        </span>
+        {link.detail && (
+          <span className="text-[0.7rem] text-white/35">{link.detail}</span>
+        )}
+      </span>
+      <span
+        aria-hidden="true"
+        className="-translate-x-1 text-[0.7rem] text-brand opacity-0 transition-[opacity,transform] duration-200 group-hover/link:translate-x-0 group-hover/link:opacity-100"
+      >
+        →
+      </span>
+    </Link>
   );
 }
 

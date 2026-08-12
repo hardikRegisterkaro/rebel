@@ -5,7 +5,20 @@ import type { ComparisonRow } from "@/lib/solutions";
  * between a capability and its two answers survives screen readers; below `md`
  * the header row is dropped and each cell carries its own visible label.
  */
-export function ComparisonTable({ rows }: { rows: ComparisonRow[] }) {
+type Header = {
+  eyebrow: string;
+  heading: string;
+  aside: string;
+  columns: { feature: string; traditional: string; rebel: string };
+};
+
+export function ComparisonTable({
+  rows,
+  header,
+}: {
+  rows: ComparisonRow[];
+  header: Header;
+}) {
   return (
     <section
       id="advantage"
@@ -22,16 +35,16 @@ export function ComparisonTable({ rows }: { rows: ComparisonRow[] }) {
               aria-hidden="true"
               className="inline-block size-[7px] bg-brand"
             />
-            The Rebel Labz Advantage
+            {header.eyebrow}
           </p>
           <h2
             id="advantage-heading"
             className="text-[clamp(1.9rem,4vw,3.1rem)] leading-[1.05] font-semibold tracking-[-0.022em]"
           >
-            Why choose us<span className="text-brand">?</span>
+            {header.heading}<span className="text-brand">?</span>
           </h2>
           <p className="mt-5 text-[0.98rem] leading-relaxed text-[#a8a8a8]">
-            See how Rebel Labz compares to traditional AI implementations.
+            {header.aside}
           </p>
         </div>
 
@@ -47,13 +60,13 @@ export function ComparisonTable({ rows }: { rows: ComparisonRow[] }) {
                   scope="col"
                   className="w-[38%] border-b border-white/[0.14] px-6.5 py-5 font-mono text-[0.62rem] font-normal tracking-[0.16em] text-dark-muted-2 uppercase"
                 >
-                  Capability
+                  {header.columns.feature}
                 </th>
                 <th
                   scope="col"
                   className="w-[31%] border-b border-l border-white/[0.14] px-6.5 py-5 font-mono text-[0.62rem] font-normal tracking-[0.16em] text-dark-muted-2 uppercase"
                 >
-                  Traditional AI
+                  {header.columns.traditional}
                 </th>
                 <th
                   scope="col"
@@ -85,7 +98,7 @@ export function ComparisonTable({ rows }: { rows: ComparisonRow[] }) {
 
                   <td className="border-l border-white/[0.09] px-6.5 py-5.5 align-top text-[0.9rem] leading-normal text-[#7a7a7a] max-md:block max-md:border-l-0 max-md:py-3">
                     <span className="mb-2 block font-mono text-[0.55rem] tracking-[0.16em] text-dark-muted-2 uppercase md:hidden">
-                      Traditional AI
+                      {header.columns.traditional}
                     </span>
                     <span className="flex items-start gap-2.5">
                       <span

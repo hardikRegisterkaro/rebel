@@ -4,7 +4,18 @@ import { SmartLink } from "@/components/smart-link";
 
 import type { Solution } from "@/lib/solutions";
 
-export function ServiceHero({ solution }: { solution: Solution }) {
+type HeroCopy = {
+  primaryCta: { label: string; href: string };
+  secondaryCta: { label: string; href: string };
+};
+
+export function ServiceHero({
+  solution,
+  hero,
+}: {
+  solution: Solution;
+  hero: HeroCopy;
+}) {
   return (
     <section
       id="top"
@@ -81,13 +92,13 @@ export function ServiceHero({ solution }: { solution: Solution }) {
               href="#offerings"
               className="inline-flex items-center gap-2.5 rounded-full bg-white px-7 py-4 text-[0.92rem] font-semibold text-ink transition-[transform,background-color] duration-300 ease-(--ease-out-soft) hover:-translate-y-0.5 hover:bg-[#e7e7e4]"
             >
-              Explore Offerings
+              {hero.primaryCta.label}
             </SmartLink>
             <SmartLink
               href="#openlab"
               className="group inline-flex items-center gap-2.5 rounded-full border border-white/30 px-6.5 py-4 text-[0.92rem] font-medium text-white transition-[border-color,background-color] duration-300 hover:border-brand hover:bg-brand/[0.08]"
             >
-              Schedule a Consultation
+              {hero.secondaryCta.label}
               <span
                 aria-hidden="true"
                 className="transition-transform duration-300 group-hover:translate-x-1"

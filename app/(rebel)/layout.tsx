@@ -4,6 +4,7 @@ import { JetBrains_Mono } from "next/font/google";
 import { RevealObserver } from "@/components/reveal-observer";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { getSiteHeader } from "@/lib/header-menu-api";
 import { jsonLd, organizationJsonLd, websiteJsonLd } from "@/lib/json-ld";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -41,12 +42,21 @@ export const metadata: Metadata = {
   },
 };
 
-/** Chrome for the Rebel Labz site. */
-export default function RebelLayout({
+/**
+ * Chrome for the Rebel Labz site.
+ *
+ * The header's navigation is fetched here rather than inside SiteHeader: the
+ * header is a client component (scroll spy, dropdowns, mobile sheet), and the
+ * fetch is cached and tag-revalidated, so doing it once in the layout keeps the
+ * nav in the server-rendered HTML instead of arriving after hydration.
+ */
+export default async function RebelLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const header = await getSiteHeader();
+
   return (
     <div
       className={`theme-rebel ${jetbrainsMono.variable} flex flex-1 flex-col bg-ink text-dark-fg`}
@@ -67,7 +77,7 @@ export default function RebelLayout({
         }}
       />
 
-      <SiteHeader />
+      <SiteHeader nav={header.nav} cta={header.cta} />
 
       <main id="main" className="flex-1">
         {children}
