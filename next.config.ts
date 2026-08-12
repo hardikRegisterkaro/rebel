@@ -6,6 +6,20 @@ const isDev = process.env.NODE_ENV === "development";
  * Origin of the CMS the careers board fetches from, normalised to scheme+host
  * because CSP source expressions take no path.
  */
+/**
+ * Host that serves CMS-uploaded media. Images authored in the Media Library
+ * are absolute URLs on this host, so next/image must be told it is allowed to
+ * optimise them — without this they fail with "hostname not configured".
+ */
+const mediaHost = (() => {
+  const raw = process.env.NEXT_PUBLIC_MEDIA_URL ?? "";
+  try {
+    return raw ? new URL(raw).hostname : "";
+  } catch {
+    return "";
+  }
+})();
+
 const cmsOrigin = (() => {
   const raw = process.env.NEXT_PUBLIC_CMS_API_URL ?? "http://localhost:3000";
   try {
@@ -33,7 +47,7 @@ const csp = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
+  `img-src 'self' data: blob:${mediaHost ? ` https://${mediaHost}` : ""}`,
   "font-src 'self'",
   // The careers board pages through the CMS API from the browser, so the CMS
   // origin has to be allowed here — `'self'` alone silently blocks every
@@ -69,9 +83,13 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
 
   images: {
-    // AVIF first, WebP fallback. No remotePatterns: every image is a local
-    // file under public/, so the optimizer never processes untrusted input.
+    // AVIF first, WebP fallback.
     formats: ["image/avif", "image/webp"],
+    // Only the CMS media host is allowed, and only when configured — the
+    // optimizer must never be pointed at an arbitrary origin.
+    remotePatterns: mediaHost
+      ? [{ protocol: "https" as const, hostname: mediaHost }]
+      : [],
   },
 
   async headers() {

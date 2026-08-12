@@ -53,7 +53,15 @@ export function SiteFooter() {
             <h2 className="mb-1 font-mono text-[0.6rem] tracking-[0.2em] text-dark-faint-2 uppercase">
               {group.label}
             </h2>
-            {group.links.map((link) => (
+            {/* `href` is optional on NavLink because a dropdown parent in the
+                header ("Solutions") is a section heading with no page of its
+                own. A footer column is a flat list of destinations, so an entry
+                without one has nothing to point at and is dropped. The type
+                predicate is what lets TypeScript see `href` as a string below —
+                filtering on a truthy check alone would not narrow it. */}
+            {group.links
+              .filter((link): link is typeof link & { href: string } => Boolean(link.href))
+              .map((link) => (
               <Link
                 key={link.label}
                 href={link.href}

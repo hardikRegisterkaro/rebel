@@ -8,7 +8,14 @@ import type { Faq } from "@/lib/solutions";
  * comes for free, it opens without JavaScript, and in-page browser search can
  * still find answers inside collapsed panels.
  */
-export function FaqSection({ faqs }: { faqs: Faq[] }) {
+type Header = {
+  eyebrow: string;
+  heading: string;
+  aside: string;
+  cta: { label: string; href: string };
+};
+
+export function FaqSection({ faqs, header }: { faqs: Faq[]; header: Header }) {
   return (
     <section
       id="faq"
@@ -28,16 +35,16 @@ export function FaqSection({ faqs }: { faqs: Faq[] }) {
             id="faq-heading"
             className="max-w-[14ch] text-[clamp(1.9rem,4vw,3.1rem)] leading-[1.05] font-semibold tracking-[-0.022em]"
           >
-            Frequently asked questions<span className="text-brand">.</span>
+            {header.heading}<span className="text-brand">.</span>
           </h2>
           <p className="mt-5.5 max-w-[32ch] text-[0.94rem] leading-relaxed text-light-muted">
-            Still unclear on something? A human replies within 48 hours.
+            {header.aside}
           </p>
           <Link
             href={`mailto:${SITE.email}`}
             className="group mt-6.5 inline-flex items-center gap-2.5 rounded-full border border-black/20 px-5.5 py-3 font-mono text-[0.7rem] tracking-[0.1em] text-light-fg uppercase transition-colors duration-300 hover:border-brand hover:bg-brand hover:text-white"
           >
-            Ask the lab
+            {header.cta.label}
             <span
               aria-hidden="true"
               className="transition-transform duration-300 group-hover:translate-x-1"

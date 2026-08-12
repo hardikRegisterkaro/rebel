@@ -23,11 +23,20 @@ export const SITE = {
 
 /* ── Navigation ──────────────────────────────────────────────────────────── */
 
+/**
+ * One entry inside a dropdown.
+ *
+ * `links` nests: an entry that has them is a group — its own label captions the
+ * links underneath it rather than standing beside them. `href` is optional for
+ * exactly that case, because a group heading often has no page of its own
+ * ("Solutions" is a section of the site, not a route).
+ */
 export type NavLink = {
   label: string;
-  href: string;
+  href?: string;
   /** Optional second line, shown in the dropdown only. */
   detail?: string;
+  links?: NavLink[];
 };
 
 export type NavGroup = {
@@ -48,24 +57,29 @@ export type NavItem = {
 };
 
 /**
- * Solution pages that actually exist. The other three pillars are shown on the
- * homepage as static cards (see PILLARS) — add them here as their routes ship.
+ * CMS pages that actually exist. Every one of them lives under /solutions —
+ * that route serves both templates, and there is no /services/[slug] to link
+ * to. The remaining pillars are homepage cards (see PILLARS) until their pages
+ * ship.
  */
 export const SOLUTION_LINKS: NavLink[] = [
+  { label: "Agentic Automation", href: "/solutions/agentic-automation" },
   { label: "Decision Intelligence", href: "/solutions/decision-intelligence" },
+  { label: "Applied Research", href: "/solutions/applied-research" },
 ];
 
 /**
- * Only routes that actually exist ship in the header. Decision Intelligence is
- * the single live solution, so "Solutions" is a plain link straight to it —
- * restore the dropdown (`links: SOLUTION_LINKS`) once a second pillar has a
- * page, and add Resources back once those routes land.
+ * The navigation the site falls back to when the CMS header menu is empty or
+ * unreachable — see lib/header-menu-api.ts. Editors assemble the real one under
+ * Header Menu, and it can nest deeper than this.
  *
- * Contact is deliberately absent: HEADER_CTA already points at /contact, so a
- * nav entry would be a second link to the same page.
+ * "Solutions" is a group, not a link: it opens the pillars underneath it and
+ * has no page of its own, which is why its href is "#". Contact is deliberately
+ * absent — HEADER_CTA already points at /contact, so a nav entry would be a
+ * second link to the same page.
  */
 export const PRIMARY_NAV: NavItem[] = [
-  { label: "Solutions", href: "/solutions/decision-intelligence" },
+  { label: "Solutions", href: "#", links: SOLUTION_LINKS },
   { label: "About Us", href: "/about" },
   { label: "Careers", href: "/careers" },
 ];

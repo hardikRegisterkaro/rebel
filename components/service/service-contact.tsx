@@ -2,7 +2,23 @@ import { CollaborationForm } from "@/components/service/collaboration-form";
 import { SITE } from "@/lib/content";
 import type { Solution } from "@/lib/solutions";
 
-export function ServiceContact({ solution }: { solution: Solution }) {
+type Panel = {
+  badge: string;
+  title: string;
+  titleAccent: string;
+  lede: string;
+  note: string;
+  email: string;
+};
+
+/** The enquiry form beside this copy is part of the site and is not authored. */
+export function ServiceContact({
+  solution,
+  panel,
+}: {
+  solution: Solution;
+  panel: Panel;
+}) {
   return (
     <section
       id="openlab"
@@ -16,14 +32,14 @@ export function ServiceContact({ solution }: { solution: Solution }) {
               aria-hidden="true"
               className="inline-block size-[7px] animate-(--animate-soft-pulse) rounded-full bg-brand"
             />
-            Lab Status: Open
+            {panel.badge}
           </p>
 
           <h2
             id="contact-heading"
             className="max-w-[18ch] text-[clamp(2.1rem,4.6vw,3.6rem)] leading-[1.02] font-semibold tracking-[-0.024em] text-balance"
           >
-            The most important <em className="italic">conversations</em>{" "}
+            {panel.title} <em className="italic">{panel.titleAccent}</em>{" "}
             shouldn&apos;t require a login.
           </h2>
 
@@ -39,7 +55,7 @@ export function ServiceContact({ solution }: { solution: Solution }) {
                 aria-hidden="true"
                 className="inline-block size-[7px] animate-(--animate-soft-pulse) rounded-full bg-brand"
               />
-              [ Lab Node: Online / Open to Collaboration ]
+              {panel.note}
             </span>
             <span>
               or write to{" "}
