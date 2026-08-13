@@ -1,8 +1,8 @@
 import { CollaborateModal } from "@/components/about/collaborate-modal";
 
-import { ABOUT, PARTNER_OFFERS } from "@/lib/about";
+import type { AboutContent } from "@/lib/about-api";
 
-export function DesignPartners() {
+export function DesignPartners({ partners }: { partners: AboutContent["partners"] }) {
   return (
     <section
       aria-labelledby="partners-heading"
@@ -19,18 +19,18 @@ export function DesignPartners() {
                 aria-hidden="true"
                 className="inline-block size-[7px] bg-brand"
               />
-              {ABOUT.partners.eyebrow}
+              {partners.eyebrow}
             </p>
             <h2
               id="partners-heading"
               className="max-w-[20ch] text-[clamp(1.9rem,4vw,3rem)] leading-[1.05] font-semibold tracking-[-0.02em]"
             >
-              {ABOUT.partners.heading}
+              {partners.heading}
               <span className="text-brand">.</span>
             </h2>
           </div>
           <p className="m-0 max-w-[38ch] text-base leading-[1.65] text-light-muted text-pretty">
-            {ABOUT.partners.aside}
+            {partners.aside}
           </p>
         </div>
 
@@ -39,7 +39,7 @@ export function DesignPartners() {
           data-reveal-delay="1"
           className="grid grid-cols-1 gap-px overflow-hidden rounded-[22px] border border-black/[0.14] bg-black/[0.14] sm:grid-cols-2 lg:grid-cols-3"
         >
-          {PARTNER_OFFERS.map((offer) => (
+          {partners.offers.map((offer) => (
             <li
               key={offer.code}
               className="flex min-h-[230px] flex-col gap-3.5 bg-paper p-[clamp(28px,3vw,38px)]"
@@ -67,14 +67,14 @@ export function DesignPartners() {
         >
           <div className="max-w-[52ch]">
             <p className="mb-3 font-mono text-[0.6rem] tracking-[0.18em] text-brand uppercase">
-              {ABOUT.partners.cohort.eyebrow}
+              {partners.cohort.eyebrow}
             </p>
             <p className="text-[clamp(1.05rem,1.8vw,1.35rem)] leading-[1.45] tracking-[-0.01em]">
-              {ABOUT.partners.cohort.body}
+              {partners.cohort.body}
             </p>
           </div>
           <CollaborateModal
-            label={ABOUT.partners.cohort.cta.label}
+            label={partners.cohort.cta.label}
             context="Design partner application"
             className="group inline-flex flex-none cursor-pointer items-center gap-2.5 rounded-full bg-brand px-6.5 py-3.5 text-[0.9rem] font-semibold text-white transition-[transform,box-shadow] duration-300 ease-(--ease-out-soft) hover:-translate-y-0.5 hover:shadow-[0_16px_34px_-14px_rgb(255_51_51/0.75)]"
           />

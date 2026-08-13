@@ -1,6 +1,7 @@
 import Image from "next/image";
 
-import { ABOUT, TEAM, type TeamMember } from "@/lib/about";
+import type { TeamMember } from "@/lib/about";
+import type { AboutContent } from "@/lib/about-api";
 
 /** "Sana Rahal" → "SR". Used until a portrait is available. */
 const initials = (name: string) =>
@@ -34,7 +35,7 @@ function Portrait({ member }: { member: TeamMember }) {
   );
 }
 
-export function FoundingTeam() {
+export function FoundingTeam({ team }: { team: AboutContent["team"] }) {
   return (
     <section
       aria-labelledby="team-heading"
@@ -47,13 +48,13 @@ export function FoundingTeam() {
               aria-hidden="true"
               className="inline-block size-[7px] bg-brand"
             />
-            {ABOUT.team.eyebrow}
+            {team.eyebrow}
           </p>
           <h2
             id="team-heading"
             className="max-w-[20ch] text-[clamp(1.9rem,4vw,3rem)] leading-[1.05] font-semibold tracking-[-0.02em]"
           >
-            {ABOUT.team.heading}
+            {team.heading}
             <span className="text-brand">.</span>
           </h2>
         </div>
@@ -63,7 +64,7 @@ export function FoundingTeam() {
           data-reveal-delay="1"
           className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
         >
-          {TEAM.map((member) => (
+          {team.members.map((member) => (
             <li key={member.name} className="group min-w-0">
               <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-ink-800">
                 <Portrait member={member} />

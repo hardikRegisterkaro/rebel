@@ -3,8 +3,9 @@ import { SmartLink } from "@/components/smart-link";
 
 import { OrbitCanvas } from "@/components/about/orbit-canvas";
 import { ABOUT } from "@/lib/about";
+import type { AboutContent } from "@/lib/about-api";
 
-export function AboutHero() {
+export function AboutHero({ hero }: { hero: AboutContent["hero"] }) {
   return (
     <section
       id="top"
@@ -51,7 +52,7 @@ export function AboutHero() {
               aria-hidden="true"
               className="inline-block size-[7px] bg-brand"
             />
-            {ABOUT.hero.badge}
+            {hero.badge}
           </p>
 
           <h1
@@ -60,7 +61,7 @@ export function AboutHero() {
             data-reveal-delay="2"
             className="max-w-[15ch] text-[clamp(2.4rem,5vw,4.2rem)] leading-[1.02] font-semibold tracking-[-0.025em]"
           >
-            {ABOUT.hero.title}
+            {hero.title}
             <span className="text-brand">.</span>
           </h1>
 
@@ -69,7 +70,7 @@ export function AboutHero() {
             data-reveal-delay="3"
             className="mt-6.5 max-w-[48ch] text-[1.125rem] leading-[1.65] text-[#b0b0b0] text-pretty"
           >
-            {ABOUT.hero.lede}
+            {hero.lede}
           </p>
 
           <div
@@ -78,10 +79,12 @@ export function AboutHero() {
             className="mt-9 flex flex-wrap items-center gap-3.5"
           >
             <SmartLink
-              href={ABOUT.hero.primaryCta.href}
+              // Optional on the type — these two scroll to a section, and a
+              // blanked value falls back to the anchor rather than breaking.
+              href={hero.primaryCta.href || "#story"}
               className="group inline-flex items-center gap-2.5 rounded-full bg-white px-6.5 py-3.5 text-[0.9rem] font-semibold text-ink transition-[transform,background-color] duration-300 ease-(--ease-out-soft) hover:-translate-y-0.5 hover:bg-[#e4e4e4]"
             >
-              {ABOUT.hero.primaryCta.label}
+              {hero.primaryCta.label}
               <span
                 aria-hidden="true"
                 className="transition-transform duration-300 group-hover:translate-x-1"
@@ -90,10 +93,10 @@ export function AboutHero() {
               </span>
             </SmartLink>
             <SmartLink
-              href={ABOUT.hero.secondaryCta.href}
+              href={hero.secondaryCta.href || "#cta"}
               className="inline-flex items-center gap-2.5 rounded-full border border-white/[0.28] px-6 py-3.5 text-[0.9rem] font-medium text-white transition-[border-color,background-color] duration-300 hover:border-brand hover:bg-brand/[0.08]"
             >
-              {ABOUT.hero.secondaryCta.label}
+              {hero.secondaryCta.label}
             </SmartLink>
           </div>
         </div>

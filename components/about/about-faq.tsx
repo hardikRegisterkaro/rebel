@@ -1,7 +1,7 @@
-import { ABOUT, ABOUT_FAQS } from "@/lib/about";
+import type { AboutContent } from "@/lib/about-api";
 
 /** Native <details>/<summary>, as elsewhere on the site — see contact-faq. */
-export function AboutFaq() {
+export function AboutFaq({ faq }: { faq: AboutContent["faq"] }) {
   return (
     <section
       id="faq"
@@ -17,13 +17,13 @@ export function AboutFaq() {
             aria-hidden="true"
             className="inline-block size-[7px] bg-brand"
           />
-          {ABOUT.faq.eyebrow}
+          {faq.eyebrow}
         </p>
         <h2
           id="about-faq-heading"
           className="mb-[clamp(30px,4vh,44px)] text-[clamp(1.9rem,4vw,3rem)] leading-[1.05] font-semibold tracking-[-0.02em]"
         >
-          {ABOUT.faq.heading}
+          {faq.heading}
           <span className="text-brand">.</span>
         </h2>
 
@@ -32,7 +32,7 @@ export function AboutFaq() {
           data-reveal-delay="1"
           className="flex max-w-[900px] flex-col border-t border-white/[0.14]"
         >
-          {ABOUT_FAQS.map((faq) => (
+          {faq.items.map((faq) => (
             <details
               key={faq.question}
               // `name` groups them into an exclusive accordion natively;

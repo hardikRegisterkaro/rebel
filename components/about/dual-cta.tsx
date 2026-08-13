@@ -2,15 +2,15 @@ import Link from "next/link";
 
 import { CollaborateModal } from "@/components/about/collaborate-modal";
 
-import { ABOUT } from "@/lib/about";
+import type { AboutContent } from "@/lib/about-api";
 import { ROLES } from "@/lib/careers";
 
 const PANEL = "flex flex-col gap-4.5 p-[clamp(36px,4.4vw,52px)]";
 const PILL =
   "mt-auto inline-flex w-fit items-center gap-2.5 rounded-full px-5.5 py-3.25 text-[0.86rem] font-semibold transition-transform duration-300 ease-(--ease-out-soft) hover:-translate-y-0.5";
 
-export function DualCta() {
-  const { partners, careers } = ABOUT.dualCta;
+export function DualCta({ dualCta }: { dualCta: AboutContent["dualCta"] }) {
+  const { partners, careers } = dualCta;
 
   return (
     <section
@@ -52,7 +52,10 @@ export function DualCta() {
               {careers.body.replace("{roles}", String(ROLES.length))}
             </p>
             <Link
-              href={careers.cta.href}
+              // `href` is optional on Cta — the other panels open a modal. Next's
+              // Link requires a defined URL, so an editor who blanks this falls
+              // back to the careers page rather than failing the build.
+              href={careers.cta.href || "/careers"}
               className={`${PILL} group bg-ink text-white hover:bg-ink-600`}
             >
               {careers.cta.label}

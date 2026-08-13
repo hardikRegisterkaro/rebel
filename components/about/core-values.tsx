@@ -1,6 +1,6 @@
-import { ABOUT, VALUES } from "@/lib/about";
+import type { AboutContent } from "@/lib/about-api";
 
-export function CoreValues() {
+export function CoreValues({ values }: { values: AboutContent["values"] }) {
   return (
     <section
       aria-labelledby="values-heading"
@@ -13,13 +13,13 @@ export function CoreValues() {
               aria-hidden="true"
               className="inline-block size-[7px] bg-brand"
             />
-            {ABOUT.values.eyebrow}
+            {values.eyebrow}
           </p>
           <h2
             id="values-heading"
             className="max-w-[16ch] text-[clamp(1.9rem,4vw,3rem)] leading-[1.05] font-semibold tracking-[-0.02em]"
           >
-            {ABOUT.values.heading}
+            {values.heading}
             <span className="text-brand">.</span>
           </h2>
         </div>
@@ -29,7 +29,7 @@ export function CoreValues() {
           data-reveal-delay="1"
           className="grid grid-cols-1 gap-px overflow-hidden rounded-[22px] border border-white/[0.14] bg-white/[0.14] sm:grid-cols-2 lg:grid-cols-4"
         >
-          {VALUES.map((value) => (
+          {values.items.map((value) => (
             <li
               key={value.code}
               className="flex min-h-[250px] flex-col gap-3.5 bg-ink-800 px-6.5 py-7.5"
