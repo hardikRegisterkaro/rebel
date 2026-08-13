@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 
 import { SITE } from "@/lib/content";
+import { leadMailto, submitLead } from "@/lib/lead-api";
 
 const FIELD =
   "min-w-0 rounded-[10px] border border-black/[0.12] bg-paper px-4 py-3.5 text-[0.88rem] text-light-fg outline-brand placeholder:text-light-faint";
@@ -12,10 +13,10 @@ const LABEL =
 /**
  * Lead capture for the solution pages.
  *
- * There is no backend, so submitting composes a mail to the lab with the form
- * contents rather than posting to an endpoint that would silently drop it. To
- * move this server-side later, swap `handleSubmit` for a Server Action — the
- * field names already match what such an action would expect.
+ * Submitting records a Lead in the CMS. `subjectPrefix` identifies which
+ * solution page the enquiry came from, so the dashboard can tell them apart.
+ * If the CMS cannot be reached the form stays filled in and offers the lab's
+ * address as a link, rather than redirecting into a mail client.
  */
 export function CollaborationForm({
   interests,
@@ -28,28 +29,54 @@ export function CollaborationForm({
   const [sent, setSent] = useState(false);
   const [name, setName] = useState("");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  /** Prefilled mail to the lab, offered only after a failed submit. */
+  const [mailtoHref, setMailtoHref] = useState<string | null>(null);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const value = (key: string) => String(data.get(key) ?? "").trim();
 
     const submittedName = value("name");
-    const subject = `${subjectPrefix} — ${value("org") || submittedName}`;
-    const body = [
-      `Name: ${submittedName}`,
-      `Email: ${value("email")}`,
-      `Organization: ${value("org") || "—"}`,
-      `Interested in: ${value("interest")}`,
-      "",
-      "The decision:",
-      value("decision"),
-    ].join("\n");
 
-    setName(submittedName);
-    setSent(true);
-    window.location.href = `mailto:${SITE.email}?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(body)}`;
+    setSending(true);
+    setError(null);
+
+    const result = await submitLead({
+      name: submittedName,
+      email: value("email"),
+      phoneNo: value("phone"),
+      leadSource: `Solutions — ${subjectPrefix}`,
+      formData: {
+        Organization: value("org") || "—",
+        "Interested in": value("interest"),
+        "The decision": value("decision"),
+      },
+    });
+
+    setSending(false);
+
+    if (result.ok) {
+      setName(submittedName);
+      setSent(true);
+      return;
+    }
+
+    setError(result.message);
+    setMailtoHref(
+      leadMailto(SITE.email, `${subjectPrefix} — ${value("org") || submittedName}`, [
+        `Name: ${submittedName}`,
+        `Email: ${value("email")}`,
+        `Phone: ${value("phone")}`,
+        `Organization: ${value("org") || "—"}`,
+        `Interested in: ${value("interest")}`,
+        "",
+        "The decision:",
+        value("decision"),
+      ])
+    );
   };
 
   if (sent) {
@@ -137,7 +164,19 @@ export function CollaborationForm({
           </label>
         </div>
 
-        <div className="grid grid-cols-1 gap-4.5 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4.5 sm:grid-cols-3">
+          <label htmlFor={`${ids}-phone`} className="flex flex-col gap-2.25">
+            <span className={LABEL}>Phone *</span>
+            <input
+              id={`${ids}-phone`}
+              name="phone"
+              type="tel"
+              required
+              autoComplete="tel"
+              placeholder="+91 98765 43210"
+              className={FIELD}
+            />
+          </label>
           <label htmlFor={`${ids}-org`} className="flex flex-col gap-2.25">
             <span className={LABEL}>Organization</span>
             <input
@@ -177,11 +216,25 @@ export function CollaborationForm({
         </label>
 
         <div className="mt-1 flex flex-col gap-3.5">
+          {error && (
+            <p role="alert" className="text-[0.82rem] leading-snug text-brand">
+              {error}{" "}
+              {mailtoHref && (
+                <a
+                  href={mailtoHref}
+                  className="underline underline-offset-2 hover:text-light-fg"
+                >
+                  Send it as an email instead
+                </a>
+              )}
+            </p>
+          )}
           <button
             type="submit"
-            className="group flex cursor-pointer items-center justify-center gap-2.5 rounded-xl bg-light-fg px-5.5 py-4 text-[0.92rem] font-semibold text-white transition-colors duration-300 hover:bg-brand"
+            disabled={sending}
+            className="group flex cursor-pointer items-center justify-center gap-2.5 rounded-xl bg-light-fg px-5.5 py-4 text-[0.92rem] font-semibold text-white transition-colors duration-300 hover:bg-brand disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:bg-light-fg"
           >
-            Request collaboration
+            {sending ? "Sending…" : "Request collaboration"}
             <span
               aria-hidden="true"
               className="transition-transform duration-300 group-hover:translate-x-1"

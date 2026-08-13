@@ -2,6 +2,8 @@
 
 import { useId, useState } from "react";
 
+import { leadMailto, submitLead } from "@/lib/lead-api";
+
 import { SITE } from "@/lib/content";
 import { CONTACT, TIMELINES, TOPICS, type Topic } from "@/lib/contact";
 
@@ -13,39 +15,74 @@ const LABEL =
 /**
  * Lead capture for the contact page.
  *
- * Same no-backend approach as components/service/collaboration-form: submitting
- * composes a mail to the lab rather than posting to an endpoint that would
- * silently drop it. Field names already match what a Server Action would
- * expect, so `handleSubmit` is the only thing that changes when one lands.
+ * Submitting records a Lead in the CMS, tagged with the chosen topic so the
+ * dashboard can tell a press enquiry from a project without opening the row.
  */
 export function ContactForm() {
   const ids = useId();
   const [topic, setTopic] = useState<Topic>(TOPICS[0]);
   const [sent, setSent] = useState(false);
   const [firstName, setFirstName] = useState("");
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  /** Prefilled mail to the lab, offered only after a failed submit. */
+  const [mailtoHref, setMailtoHref] = useState<string | null>(null);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  /**
+   * Record the enquiry as a lead in the CMS.
+   *
+   * A failure leaves the filled-in form exactly as it is and offers the lab's
+   * address as a link, rather than redirecting to a mail client — the visitor
+   * decides whether to switch apps, and retrying costs them nothing.
+   */
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const value = (key: string) => String(data.get(key) ?? "").trim();
 
     const submittedName = value("name");
-    const body = [
-      `Topic: ${topic}`,
-      `Name: ${submittedName}`,
-      `Email: ${value("email")}`,
-      `Organization: ${value("org") || "—"}`,
-      `Timeline: ${value("timeline")}`,
-      "",
-      "The problem:",
-      value("msg"),
-    ].join("\n");
+    const detail = {
+      Topic: topic,
+      Organization: value("org") || "—",
+      Timeline: value("timeline"),
+      "The problem": value("msg"),
+    };
 
-    setFirstName(submittedName.split(" ")[0]);
-    setSent(true);
-    window.location.href = `mailto:${SITE.email}?subject=${encodeURIComponent(
-      `${topic} — ${value("org") || submittedName}`,
-    )}&body=${encodeURIComponent(body)}`;
+    setSending(true);
+    setError(null);
+
+    const result = await submitLead({
+      name: submittedName,
+      email: value("email"),
+      phoneNo: value("phone"),
+      // The topic is in the source so the dashboard can tell a press enquiry
+      // from a project without opening the row.
+      leadSource: `Contact — ${topic}`,
+      formData: detail,
+    });
+
+    setSending(false);
+
+    if (result.ok) {
+      setFirstName(submittedName.split(" ")[0]);
+      setSent(true);
+      return;
+    }
+
+    setError(result.message);
+    setMailtoHref(
+      leadMailto(SITE.email, `${topic} — ${value("org") || submittedName}`, [
+        `Topic: ${topic}`,
+        `Name: ${submittedName}`,
+        `Email: ${value("email")}`,
+        `Phone: ${value("phone")}`,
+        `Organization: ${value("org") || "—"}`,
+        `Timeline: ${value("timeline")}`,
+        "",
+        "The problem:",
+        value("msg"),
+      ])
+    );
   };
 
   if (sent) {
@@ -158,7 +195,19 @@ export function ContactForm() {
           </label>
         </div>
 
-        <div className="grid grid-cols-1 gap-4.5 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4.5 sm:grid-cols-3">
+          <label htmlFor={`${ids}-phone`} className="flex flex-col gap-2.25">
+            <span className={LABEL}>Phone *</span>
+            <input
+              id={`${ids}-phone`}
+              name="phone"
+              type="tel"
+              required
+              autoComplete="tel"
+              placeholder="+91 98765 43210"
+              className={FIELD}
+            />
+          </label>
           <label htmlFor={`${ids}-org`} className="flex flex-col gap-2.25">
             <span className={LABEL}>Organization</span>
             <input
@@ -198,11 +247,27 @@ export function ContactForm() {
         </label>
 
         <div className="mt-1 flex flex-col gap-3.5">
+          {/* Surfaced above the button so it is read before a retry. Nothing
+              typed is cleared, so retrying is a single click. */}
+          {error && (
+            <p role="alert" className="text-[0.82rem] leading-snug text-brand">
+              {error}{" "}
+              {mailtoHref && (
+                <a
+                  href={mailtoHref}
+                  className="underline underline-offset-2 hover:text-light-fg"
+                >
+                  Send it as an email instead
+                </a>
+              )}
+            </p>
+          )}
           <button
             type="submit"
-            className="group flex cursor-pointer items-center justify-center gap-2.5 rounded-xl bg-light-fg px-5.5 py-4 text-[0.94rem] font-semibold text-white transition-[background-color,box-shadow] duration-300 hover:bg-brand hover:shadow-[0_14px_34px_-14px_rgb(255_51_51/0.65)]"
+            disabled={sending}
+            className="group flex cursor-pointer items-center justify-center gap-2.5 rounded-xl bg-light-fg px-5.5 py-4 text-[0.94rem] font-semibold text-white transition-[background-color,box-shadow] duration-300 hover:bg-brand hover:shadow-[0_14px_34px_-14px_rgb(255_51_51/0.65)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:bg-light-fg disabled:hover:shadow-none"
           >
-            Send to the lab
+            {sending ? "Sending…" : "Send to the lab"}
             <span
               aria-hidden="true"
               className="transition-transform duration-300 group-hover:translate-x-1"

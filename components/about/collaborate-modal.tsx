@@ -2,6 +2,8 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 
+import { leadMailto, submitLead } from "@/lib/lead-api";
+
 import { SITE } from "@/lib/content";
 
 const FIELD =
@@ -54,28 +56,61 @@ export function CollaborateModal({
   };
   const closeDialog = () => dialogRef.current?.close();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  /** Prefilled mail to the lab, offered only after a failed submit. */
+  const [mailtoHref, setMailtoHref] = useState<string | null>(null);
+
+  /**
+   * Record the enquiry as a lead. A failure keeps the modal open with every
+   * field intact and offers the lab's address as a link — never a redirect,
+   * which would drop the visitor into a mail client they did not ask for.
+   */
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const value = (key: string) => String(data.get(key) ?? "").trim();
 
     const submittedName = value("name");
-    const body = [
-      `Enquiry: ${context}`,
-      "",
-      `Name: ${submittedName}`,
-      `Email: ${value("email")}`,
-      `Organization: ${value("org") || "—"}`,
-      "",
-      "What they're working on:",
-      value("note") || "—",
-    ].join("\n");
 
-    setFirstName(submittedName.split(" ")[0]);
-    setSent(true);
-    window.location.href = `mailto:${SITE.email}?subject=${encodeURIComponent(
-      `${context} — ${value("org") || submittedName}`,
-    )}&body=${encodeURIComponent(body)}`;
+    setSending(true);
+    setError(null);
+
+    const result = await submitLead({
+      name: submittedName,
+      email: value("email"),
+      phoneNo: value("phone"),
+      // `context` distinguishes the two places this modal opens from — the
+      // design-partner CTA and the closing panel.
+      leadSource: `About — ${context}`,
+      formData: {
+        Organization: value("org") || "—",
+        "What they're working on": value("note") || "—",
+      },
+    });
+
+    setSending(false);
+
+    if (result.ok) {
+      setFirstName(submittedName.split(" ")[0]);
+      setSent(true);
+      return;
+    }
+
+    setError(result.message);
+    setMailtoHref(
+      leadMailto(SITE.email, `${context} — ${value("org") || submittedName}`, [
+        `Enquiry: ${context}`,
+        "",
+        `Name: ${submittedName}`,
+        `Email: ${value("email")}`,
+        `Phone: ${value("phone")}`,
+        `Organization: ${value("org") || "—"}`,
+        "",
+        "What they're working on:",
+        value("note") || "—",
+      ])
+    );
   };
 
   return (
@@ -187,17 +222,37 @@ export function CollaborateModal({
                 </label>
               </div>
 
-              <label htmlFor={`${ids}-org`} className="flex flex-col gap-2.25">
-                <span className={LABEL}>Organization</span>
-                <input
-                  id={`${ids}-org`}
-                  name="org"
-                  type="text"
-                  autoComplete="organization"
-                  placeholder="Company / institute"
-                  className={FIELD}
-                />
-              </label>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <label
+                  htmlFor={`${ids}-phone`}
+                  className="flex flex-col gap-2.25"
+                >
+                  <span className={LABEL}>Phone *</span>
+                  <input
+                    id={`${ids}-phone`}
+                    name="phone"
+                    type="tel"
+                    required
+                    autoComplete="tel"
+                    placeholder="+91 98765 43210"
+                    className={FIELD}
+                  />
+                </label>
+                <label
+                  htmlFor={`${ids}-org`}
+                  className="flex flex-col gap-2.25"
+                >
+                  <span className={LABEL}>Organization</span>
+                  <input
+                    id={`${ids}-org`}
+                    name="org"
+                    type="text"
+                    autoComplete="organization"
+                    placeholder="Company / institute"
+                    className={FIELD}
+                  />
+                </label>
+              </div>
 
               <label htmlFor={`${ids}-note`} className="flex flex-col gap-2.25">
                 <span className={LABEL}>What you&apos;re working on</span>
@@ -211,11 +266,25 @@ export function CollaborateModal({
               </label>
 
               <div className="mt-1 flex flex-col gap-3">
+                {error && (
+                  <p role="alert" className="text-[0.82rem] leading-snug text-brand">
+                    {error}{" "}
+                    {mailtoHref && (
+                      <a
+                        href={mailtoHref}
+                        className="underline underline-offset-2 hover:text-light-fg"
+                      >
+                        Send it as an email instead
+                      </a>
+                    )}
+                  </p>
+                )}
                 <button
                   type="submit"
-                  className="group flex cursor-pointer items-center justify-center gap-2.5 rounded-xl bg-light-fg px-5.5 py-4 text-[0.92rem] font-semibold text-white transition-[background-color,box-shadow] duration-300 hover:bg-brand hover:shadow-[0_14px_34px_-14px_rgb(255_51_51/0.65)]"
+                  disabled={sending}
+                  className="group flex cursor-pointer items-center justify-center gap-2.5 rounded-xl bg-light-fg px-5.5 py-4 text-[0.92rem] font-semibold text-white transition-[background-color,box-shadow] duration-300 hover:bg-brand hover:shadow-[0_14px_34px_-14px_rgb(255_51_51/0.65)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:bg-light-fg disabled:hover:shadow-none"
                 >
-                  Send to the lab
+                  {sending ? "Sending…" : "Send to the lab"}
                   <span
                     aria-hidden="true"
                     className="transition-transform duration-300 group-hover:translate-x-1"
