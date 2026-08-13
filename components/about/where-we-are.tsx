@@ -1,10 +1,10 @@
-import { ABOUT, STORY_CARDS } from "@/lib/about";
+import type { AboutContent } from "@/lib/about-api";
 
 /** 1px gaps over a dark backing paint the dividers between cells. */
 const CELL_GRID =
   "grid grid-cols-1 gap-px overflow-hidden rounded-[22px] border border-black/[0.14] bg-black/[0.14]";
 
-export function WhereWeAre() {
+export function WhereWeAre({ story }: { story: AboutContent["story"] }) {
   return (
     <section
       id="story"
@@ -18,17 +18,17 @@ export function WhereWeAre() {
               aria-hidden="true"
               className="inline-block size-[7px] bg-brand"
             />
-            {ABOUT.story.eyebrow}
+            {story.eyebrow}
           </p>
           <h2
             id="story-heading"
             className="max-w-[18ch] text-[clamp(1.9rem,4vw,3rem)] leading-[1.05] font-semibold tracking-[-0.02em]"
           >
-            {ABOUT.story.heading}
+            {story.heading}
             <span className="text-brand">.</span>
           </h2>
           <p className="mt-5 max-w-[54ch] text-base leading-[1.65] text-light-muted text-pretty">
-            {ABOUT.story.lede}
+            {story.lede}
           </p>
         </div>
 
@@ -37,7 +37,7 @@ export function WhereWeAre() {
           data-reveal-delay="1"
           className={`${CELL_GRID} sm:grid-cols-2 lg:grid-cols-3`}
         >
-          {STORY_CARDS.map((card) => (
+          {story.cards.map((card) => (
             <li
               key={card.title}
               className="flex min-h-[210px] flex-col gap-3 bg-paper p-[clamp(28px,3vw,38px)]"

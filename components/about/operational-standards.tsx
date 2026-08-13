@@ -1,6 +1,6 @@
-import { ABOUT, BADGES } from "@/lib/about";
+import type { AboutContent } from "@/lib/about-api";
 
-export function OperationalStandards() {
+export function OperationalStandards({ standards }: { standards: AboutContent["standards"] }) {
   return (
     <section
       aria-labelledby="standards-heading"
@@ -13,17 +13,17 @@ export function OperationalStandards() {
               aria-hidden="true"
               className="inline-block size-[7px] bg-brand"
             />
-            {ABOUT.standards.eyebrow}
+            {standards.eyebrow}
           </p>
           <h2
             id="standards-heading"
             className="max-w-[16ch] text-[clamp(1.9rem,4vw,3rem)] leading-[1.05] font-semibold tracking-[-0.02em]"
           >
-            {ABOUT.standards.heading}
+            {standards.heading}
             <span className="text-brand">.</span>
           </h2>
           <p className="mt-5.5 max-w-[40ch] text-[0.94rem] leading-relaxed text-[#a8a8a8]">
-            {ABOUT.standards.body}
+            {standards.body}
           </p>
         </div>
 
@@ -32,7 +32,7 @@ export function OperationalStandards() {
           data-reveal-delay="1"
           className="grid grid-cols-1 gap-px overflow-hidden rounded-[22px] border border-white/[0.14] bg-white/[0.14] sm:grid-cols-2"
         >
-          {BADGES.map((badge) => (
+          {standards.items.map((badge) => (
             <li
               key={badge.code}
               className="flex min-h-[150px] flex-col gap-2.5 bg-ink-800 px-6 py-6.5"
