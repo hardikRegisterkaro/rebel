@@ -7,15 +7,25 @@ import { LEGAL_UPDATED, type LegalSection } from "@/lib/legal";
  * Shared shell for the privacy and terms pages: dark header, light prose body,
  * keeping the site's section alternation. Both pages are pure prose, so they
  * share one layout rather than duplicating it.
+ *
+ * The body comes from the CMS as HTML when an editor has written one, and falls
+ * back to the structured sections shipped in lib/legal.ts otherwise — a policy
+ * page must never render empty.
  */
 export function LegalPage({
   title,
   intro,
   sections,
+  html = "",
+  updated = LEGAL_UPDATED,
 }: {
   title: string;
   intro: string;
   sections: LegalSection[];
+  /** CMS body. When present it replaces `sections` entirely. */
+  html?: string;
+  /** This policy's own revision date, already formatted. */
+  updated?: string;
 }) {
   return (
     <>
@@ -76,7 +86,7 @@ export function LegalPage({
             data-reveal-delay="3"
             className="mt-7 border-t border-white/10 pt-5 font-mono text-[0.62rem] tracking-[0.14em] text-dark-faint uppercase"
           >
-            Last updated {LEGAL_UPDATED}
+            Last updated {updated}
           </p>
         </div>
       </section>
@@ -87,7 +97,16 @@ export function LegalPage({
       >
         <div className="mx-auto max-w-(--spacing-shell) px-6 py-[clamp(56px,9vh,100px)] sm:px-7">
           <div className="flex max-w-[70ch] flex-col gap-11">
-            {sections.map((section, index) => (
+            {html ? (
+              <div
+                data-reveal="fade-up"
+                className="legal-body"
+                // Authored in the CMS by trusted staff — the same trust
+                // boundary as every other authored page on this site.
+                dangerouslySetInnerHTML={{ __html: html }}
+              />
+            ) : (
+              sections.map((section, index) => (
               <section
                 key={section.heading}
                 data-reveal="fade-up"
@@ -122,7 +141,8 @@ export function LegalPage({
                   </ul>
                 )}
               </section>
-            ))}
+              ))
+            )}
 
             <p
               data-reveal="fade-up"
