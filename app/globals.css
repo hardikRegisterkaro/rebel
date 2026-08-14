@@ -830,3 +830,125 @@
   font-size: 0.86rem;
   line-height: 1.6;
 }
+
+/* ─────────────────────────── Legal page body ─────────────────────────────
+   CMS-authored terms and privacy copy on the light surface. Matches the
+   structured fallback in components/legal-page rather than introducing a
+   second look: the reader should not be able to tell which one they got. */
+
+.legal-body {
+  max-width: 70ch;
+  color: var(--color-light-fg-2);
+  font-size: 0.96rem;
+  line-height: 1.7;
+}
+
+.legal-body > :first-child {
+  margin-top: 0;
+}
+
+.legal-body h2 {
+  margin-top: 2.75rem;
+  margin-bottom: 1rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-light-fg);
+}
+
+.legal-body h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-light-fg);
+}
+
+.legal-body p {
+  margin-bottom: 1rem;
+}
+
+.legal-body strong {
+  color: var(--color-light-fg);
+  font-weight: 600;
+}
+
+.legal-body a {
+  color: var(--color-brand);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.legal-body ul,
+.legal-body ol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.legal-body li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+/* The same square brand marker the shipped sections use. */
+.legal-body ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  background: var(--color-brand);
+}
+
+.legal-body ol {
+  counter-reset: legal-item;
+}
+
+.legal-body ol > li::before {
+  counter-increment: legal-item;
+  content: counter(legal-item) ".";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.8rem;
+  color: var(--color-brand);
+}
+
+.legal-body blockquote {
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--color-brand);
+  color: var(--color-light-muted);
+}
+
+.legal-body table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.legal-body th,
+.legal-body td {
+  padding: 0.65rem 0.9rem;
+  border: 1px solid rgb(0 0 0 / 0.12);
+  text-align: left;
+}
+
+.legal-body th {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-light-muted-2);
+}
+
+.legal-body hr {
+  margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid rgb(0 0 0 / 0.1);
+}
