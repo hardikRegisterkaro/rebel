@@ -17,14 +17,14 @@ export const SITE_URL =
 export const SITEMAP_ROUTES: { path: string; priority: number }[] = [
   { path: "/", priority: 1 },
   { path: "/about", priority: 0.8 },
-  { path: "/blog", priority: 0.8 },
   { path: "/careers", priority: 0.8 },
   { path: "/contact", priority: 0.7 },
   { path: "/privacy", priority: 0.3 },
   { path: "/terms", priority: 0.3 },
-  // Role and solution pages are NOT listed here — they come from the CMS and are appended
-  // by app/sitemap.ts at request time, so a newly published opening is listed
-  // without a redeploy.
+  // Not listed here, because each is owned by another sitemap in the index:
+  // /blog and its posts live in blog-sitemap.xml, solution pages in
+  // service-sitemap.xml, and role pages are appended to this one at request
+  // time from the CMS. A URL belongs to exactly one sitemap.
 ];
 
 /** Priority applied to each CMS-sourced role page in the sitemap. */
